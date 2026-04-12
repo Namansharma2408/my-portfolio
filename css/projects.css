@@ -1,0 +1,243 @@
+.projects {
+  width: 100%;
+  color: var(--text-primary);
+}
+
+.projects-master-section {
+  position: relative;
+  min-height: calc(var(--project-count, 3) * 120vh + 120vh);
+}
+
+/* ── Background stack ── */
+.project-bg-stack {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.project-bg-stack .swap-layer {
+  position: absolute;
+  inset: 0;
+  will-change: transform, opacity;
+}
+
+/* ── Sticky display shell ── */
+.project-sticky-shell {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 2rem;
+  box-sizing: border-box;
+  z-index: 1;
+}
+
+/* ── Card ── */
+.project-stage-card {
+  width: min(1380px, 96vw);
+  min-height: min(88vh, 940px);
+  padding: clamp(1.2rem, 2.4vw, 2.4rem);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 20px;
+  background: rgba(8, 10, 14, 0.54);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-sizing: border-box;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: 1rem;
+}
+
+/* ── Title slot ── */
+.project-title-slot {
+  position: relative;
+  overflow: hidden;
+  min-height: clamp(2.8rem, 5.2vw, 5rem);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  background: rgba(10, 14, 20, 0.74);
+}
+
+.project-stage-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4.6vw, 4rem);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* ── Layout grid ── */
+.project-layout-grid {
+  display: grid;
+  grid-template-columns: 62% 38%;
+  gap: clamp(1rem, 2vw, 1.5rem);
+  min-height: 0;
+}
+
+/* ── Image slot ── */
+.project-layout-image-wrap {
+  min-height: 0;
+  position: relative;
+  overflow: hidden;
+  border-radius: 14px;
+  aspect-ratio: 16 / 10;
+  background: #0b1018;
+}
+
+.project-layout-image-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+}
+
+/* ── Text blocks ── */
+.project-layout-text-wrap {
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.project-block {
+  padding: 0;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  position: relative;
+  overflow: hidden;
+  flex: 1;
+}
+
+.project-block h3 {
+  margin: 0 0 0.8rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.1rem, 1.6vw, 1.5rem);
+  color: var(--accent-primary);
+  text-transform: uppercase;
+}
+
+.project-block p {
+  margin: 0;
+  line-height: 1.66;
+  color: rgba(255, 255, 255, 0.88);
+  font-size: clamp(0.95rem, 1.02vw, 1.05rem);
+  max-height: 19vh;
+  overflow: auto;
+}
+
+/* ── Tech tags ── */
+.project-tech-tags {
+  margin-top: 0.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.tech-tag {
+  padding: 0.42rem 0.8rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  background: rgba(255, 255, 255, 0.08);
+  font-size: 0.8rem;
+  color: #fff;
+}
+
+/* ── Swap slots: all layers sit on top of each other ── */
+.swap-slot {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  contain: paint;
+}
+
+/* Both layers fill the slot; GSAP drives their transform/opacity */
+.swap-slot .swap-layer {
+  will-change: transform, opacity;
+}
+
+/* current layer sits in normal flow so it sizes the slot */
+.swap-slot .swap-current {
+  position: relative;
+  z-index: 1;
+}
+
+/* next layer is absolute so it doesn't push layout */
+.swap-slot .swap-next {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+}
+
+/* Title and image slot layers need flex/full-size behaviour */
+#slot-title .swap-layer {
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  padding: 0.25rem 0.55rem;
+  background: rgba(10, 14, 20, 0.94);
+  width: 100%;
+  height: 100%;
+}
+
+#slot-problem .swap-layer,
+#slot-solution .swap-layer {
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  padding: clamp(0.9rem, 1.8vw, 1.4rem);
+  background: rgba(14, 18, 24, 0.94);
+  border-radius: 12px;
+}
+
+#slot-image .swap-layer {
+  border-radius: 14px;
+  overflow: hidden;
+  background: #0b1018;
+  width: 100%;
+  height: 100%;
+}
+
+#slot-image .swap-layer img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ── Scroll trigger step markers ── */
+.project-index-steps {
+  position: relative;
+  z-index: 0;
+}
+
+.project-index-step {
+  height: 120vh;
+}
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  .projects-master-section {
+    min-height: calc(var(--project-count, 3) * 105vh + 120vh);
+  }
+
+  .project-sticky-shell {
+    padding: 1rem;
+  }
+
+  .project-stage-card {
+    min-height: 86vh;
+  }
+
+  .project-layout-grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: 34vh 1fr;
+  }
+
+  .project-block p {
+    max-height: none;
+  }
+}

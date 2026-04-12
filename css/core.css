@@ -1,3 +1,4 @@
+/* SIDEBAR DRAWER */
 :root {
   /* Core Colors */
   --bg-primary: #050505;
@@ -127,9 +128,9 @@ body {
 /* SIDE NAVBAR TRIGGER (Hamburger): Fixed on Desktop after Scroll OR Always on Mobile */
 #side-nav-trigger {
   position: fixed;
-  top: 2vh;
-  right: 2vw;
-  z-index: 100;
+  top: 3vh;
+  right: 3vw;
+  z-index: 1000; /* Higher than other content */
   color: var(--text-primary);
   display: none; /* Initially hidden on Desktop until scroll */
 }
@@ -147,15 +148,16 @@ body {
 }
 
 
-/* SIDEBAR DRAWER */
+
+
 #full{
   height: 100vh;
-  width: 20vw;
+  width: 40vw;
   box-sizing: border-box;
   position: fixed;
   background-color: var(--drawer-bg);
   top: 0;
-  right: -20vw; /* Hidden state */
+  right: -40vw;
   backdrop-filter: var(--nav-blur); 
   -webkit-backdrop-filter: var(--nav-blur);
   border-left: 1px solid rgba(255, 255, 255, 0.05);
@@ -181,7 +183,7 @@ body {
 }
 
 #full h4:hover{
-  transform: scale(1.5);
+  font-size: 60px;
   background-color: #333333;
   color: var(--text-primary);
   opacity: 0.8;
@@ -205,25 +207,11 @@ body {
 #full i:hover {
   transform: rotate(90deg) scale(1.1);
 }
-
-/* Responsive Handling */
 @media (max-width: 768px) {
-  #top-nav-container {
-    display: none !important; /* Never show on mobile */
-  }
-  
-  #side-nav-trigger {
-    display: block !important; /* Always show hamburger trigger on mobile */
-  }
-
-  #full {
-    width: 60vw; /* Wider drawer on smaller screens */
-    right: -60vw; /* Updated hidden state based on width */
-  }
-  
-  #name {
-    font-size: 100px; /* Scaling down name for context testing */
-  }
+  #full { width: 60vw; right: -60vw; }
+  #name { font-size: 100px; }
+  #top-nav-container { display: none !important; }
+  #side-nav-trigger { display: block !important; }
 }
 
 .grid-container {

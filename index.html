@@ -5,13 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>My Website</title>
     <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
     <!-- Modular CSS -->
     <link rel="stylesheet" href="css/core.css" />
     <link rel="stylesheet" href="css/about.css" />
     <link rel="stylesheet" href="css/keyboard.css" />
+    <link rel="stylesheet" href="css/projects.css" />
     <link
       rel="stylesheet"
       type="text/css"
@@ -44,12 +48,12 @@
     </div>
 
     <div id="full">
-        <h4>Home</h4>
-        <h4>About</h4>
-        <h4>Skills</h4>
-        <h4>Projects</h4>
-        <h4>Contact</h4>
-        <i class="ri-close-line"></i>
+      <h4>Home</h4>
+      <h4>About</h4>
+      <h4>Skills</h4>
+      <h4>Projects</h4>
+      <h4>Contact</h4>
+      <i class="ri-close-line"></i>
     </div>
     <div id="name-container">
       <p id="name">Naman<br />Sharma</p>
@@ -75,7 +79,11 @@
           </div>
           <div class="about-bio">
             <p>
-              I am a Computer Science undergrad at IIT Bhilai and a passionate Software Developer. I specialize in building high-performance, scalable web architectures and AI-driven systems. I thrive on engineering Multi-Agent RAG pipelines and distributed microservices.
+              I am a Computer Science undergrad at IIT Bhilai and a passionate
+              Software Developer. I specialize in building high-performance,
+              scalable web architectures and AI-driven systems. I thrive on
+              engineering Multi-Agent RAG pipelines and distributed
+              microservices.
             </p>
           </div>
         </div>
@@ -114,7 +122,10 @@
           </div>
           <div class="grid-right">
             <div class="grid-top">
-              <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Team Discussion" />
+              <img
+                src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                alt="Team Discussion"
+              />
             </div>
             <div class="grid-bottom stats-box">
               <div class="stat">
@@ -137,14 +148,44 @@
     <div id="technical-skills">
       <div id="tech-skills-heading">
         <h2 class="section-title">Technical Skills</h2>
-        <p class="section-subtitle">Hover over the keys to explore my tech stack</p>
+        <p class="section-subtitle">
+          Hover over the keys to explore my tech stack
+        </p>
       </div>
       <div id="keyboard-wrapper">
         <!-- The static HTML replaces the dynamically JS generated code -->
         <!-- Just load the content generated from keyboard.html here dynamically using fetch or Server Side Includes if this was a backend. Since this is purely static frontend, we place the generated HTML blocks perfectly inside here, or keep the script if preferred. Let's physically inject the HTML. -->
       </div>
     </div>
-
+    <div class="projects" style="color: antiquewhite">Hii i am naman</div>
+    <script type="application/json" id="project-data">
+      [
+        {
+          "title": "Multi-Agent RAG System",
+          "problem": "Knowledge-heavy workflows were slow and inconsistent because retrieval and generation were handled in one monolithic pipeline with weak context prioritization. As document volume grew, latency spiked, relevance dropped, and users often received fragmented answers with low traceability.",
+          "solution": "Designed a multi-agent RAG architecture with dedicated retrieval, ranking, validation, and synthesis agents coordinated through a lightweight orchestration layer. Added chunk scoring, confidence checks, and caching to reduce hallucinations, improve factual grounding, and keep response latency stable even under higher traffic.",
+          "image": "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=80",
+          "tech": ["Python", "FastAPI", "LangChain", "VectorDB"],
+          "bg": "linear-gradient(135deg, #1f1c2c 0%, #928dab 100%)"
+        },
+        {
+          "title": "Campus Microservices",
+          "problem": "Campus tools were fragmented across teams, causing duplicated data, delayed operations, and frequent manual follow-ups between departments. Critical workflows like approvals, notifications, and reporting depended on disconnected systems with inconsistent data contracts.",
+          "solution": "Built event-driven microservices for admissions, notices, and operations with asynchronous messaging, shared schemas, and resilient retry handling. Introduced centralized observability and contract validation to improve reliability, reduce turnaround time, and eliminate repetitive manual escalation cycles.",
+          "image": "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1200&q=80",
+          "tech": ["Node.js", "Docker", "RabbitMQ", "Redis"],
+          "bg": "linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%)"
+        },
+        {
+          "title": "NextGen Dashboard",
+          "problem": "Stakeholders couldn’t track key metrics in real time because existing dashboards were slow, visually cluttered, and difficult to navigate. Large datasets triggered expensive re-renders, making exploration laggy and reducing confidence during decision-critical reviews.",
+          "solution": "Implemented a high-performance analytics dashboard with incremental rendering, memoized data transforms, and stream-based updates for critical KPIs. Redesigned the information hierarchy, interaction states, and component density so teams could scan trends faster and make decisions with fewer context switches.",
+          "image": "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=1200&q=80",
+          "tech": ["Next.js", "TypeScript", "GSAP", "Tailwind"],
+          "bg": "linear-gradient(135deg, #232526 0%, #414345 100%)"
+        }
+      ]
+    </script>
     <!-- Modular JS -->
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"
@@ -152,9 +193,11 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js"></script>
     <script src="js/core.js"></script>
     <script src="js/nav.js"></script>
     <script src="js/about.js"></script>
     <script src="js/keyboard.js"></script>
+    <script src="js/projects.js"></script>
   </body>
 </html>
