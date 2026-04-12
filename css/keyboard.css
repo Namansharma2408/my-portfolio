@@ -1,0 +1,234 @@
+#technical-skills {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  position: relative;
+  gap: 4rem;
+}
+
+#tech-skills-heading {
+  text-align: center;
+  z-index: 10;
+}
+
+.section-title {
+  color: var(--text-primary);
+  font-size: 3.5rem;
+  font-family: var(--font-display);
+  font-weight: 700;
+  margin: 0;
+  margin-bottom: 0.5rem;
+  letter-spacing: -1px;
+}
+
+.section-subtitle {
+  color: var(--text-secondary);
+  font-size: 1.25rem;
+  font-family: var(--font-main);
+  margin: 0;
+  letter-spacing: 0.5px;
+}
+
+#keyboard-wrapper {
+  position: relative;
+  perspective: 2000px;
+  margin-top: 5rem;
+  margin-bottom: 5rem;
+}
+
+.keyboard-shadow {
+  position: absolute;
+  top: 6rem;
+  right: -2rem;
+  bottom: -6rem;
+  left: 2rem;
+  border-radius: 2rem;
+  background-color: #000;
+  pointer-events: none;
+}
+
+.keyboard-body {
+  position: relative;
+  transform-style: preserve-3d;
+  transform: scale(1) rotateX(12deg) rotateY(0deg) rotateZ(0deg);
+  pointer-events: none;
+}
+
+.keyboard-inner {
+  position: relative;
+  padding: 4rem;
+  border-radius: 2rem;
+  background: #101216;
+  box-shadow:
+    0 60px 0 #0a0b0e,
+    0 64px 0 #000000;
+  border: 4px solid #2f343d;
+  border-bottom: 4px solid #0a0b0e;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  transform-style: preserve-3d;
+  pointer-events: none;
+}
+
+.edge-highlight-top {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 4px;
+  background: #313742;
+  border-top-left-radius: 2rem;
+  border-top-right-radius: 2rem;
+}
+
+.keyboard-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  pointer-events: none;
+}
+
+.keyboard-row {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  pointer-events: none;
+}
+
+.key-container {
+  position: relative;
+  width: var(--key-width);
+  height: 7rem;
+  cursor: pointer;
+  transform-style: preserve-3d;
+  pointer-events: auto;
+}
+
+.key-shadow-base {
+  position: absolute;
+  top: 1rem;
+  left: 0;
+  right: 0;
+  bottom: -1rem;
+  background-color: #090a0c;
+  border-radius: 1rem;
+}
+
+.key-body {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: #1b1e23;
+  border: 4px solid #2f343d;
+  border-bottom: 4px solid #131519;
+  border-radius: 1rem;
+  transform: translateY(0);
+  transition:
+    transform 0.1s cubic-bezier(0.4, 0, 0.2, 1),
+    background-color 0.2s,
+    border-color 0.2s;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.key-container:hover .key-body {
+  transform: translateY(0.1rem);
+  background: #252930;
+  border-color: var(--hover-color, #ffffff);
+}
+
+.key-container:active .key-body,
+.key-container.active-press .key-body {
+  transform: translateY(1rem);
+  background: #252930;
+  border-color: var(--hover-color, #ffffff);
+  transition: transform 0.05s;
+}
+
+.key-content {
+  position: relative;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 10%;
+  box-sizing: border-box;
+}
+
+.key-content img,
+.key-content i,
+.key-content svg {
+  width: 60%;
+  height: 60%;
+  object-fit: contain;
+  transition: all 0.3s ease;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  font-size: 3.6rem !important; /* For devicons font size (1.8 * 2) */
+}
+
+/* Explicitly fix SVG display to preserve internal path rendering */
+.key-content svg {
+  display: block !important;
+}
+
+.tech-name {
+  position: absolute;
+  bottom: 8%;
+  font-size: 1.3rem; /* 0.65 * 2 */
+  font-family: sans-serif;
+  color: #ffffff;
+  opacity: 0;
+  transform: translateY(10px); /* 5px * 2 */
+  transition: all 0.3s ease;
+  pointer-events: none;
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+.key-container:hover .tech-name {
+  opacity: 1;
+  transform: translateY(0);
+  color: #ffffff;
+}
+
+.key-container:hover .key-content img,
+.key-container:hover .key-content i,
+.key-container:hover .key-content svg {
+  height: 45%;
+  width: 45%;
+  transform: translateY(-20%);
+  font-size: 2.8rem !important; /* 1.4 * 2 */
+}
+
+.key-text {
+  font-size: 1.7rem; /* 0.85 * 2 */
+  user-select: none;
+  color: #ffffff;
+  font-family: sans-serif;
+  font-weight: 600;
+}
+
+.key-content i,
+.key-content svg,
+.key-content svg path {
+  color: #ffffff;
+  fill: #ffffff;
+  transition:
+    color 0.1s ease,
+    fill 0.1s ease;
+}
+
+.key-container:hover .key-content i,
+.key-container:hover .key-content svg,
+.key-container:hover .key-content svg path {
+  color: var(--hover-color, #ffffff) !important;
+  fill: var(--hover-color, #ffffff) !important;
+}

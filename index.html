@@ -4,26 +4,52 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>My Website</title>
-    <link rel="stylesheet" href="style.css" />
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Modular CSS -->
+    <link rel="stylesheet" href="css/core.css" />
+    <link rel="stylesheet" href="css/about.css" />
+    <link rel="stylesheet" href="css/keyboard.css" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
   </head>
   <body>
-
     <div class="animation">
       <svg id="canvas"></svg>
+      <div class="glass-overlay"></div>
     </div>
     <div class="grid-container"></div>
-    <div id="navigation-container">
-      <div id="logo-container">
-        <img src="./public/logoWhite.svg" alt="logo" id="logo-image" />
-      </div>
-      <div id="navigation-bar">
-        <ul id="navigation-items">
-          <li class="navigation-item">About</li>
-          <li class="navigation-item">Projects</li>
-          <li class="navigation-item">Home</li>
-          <li class="navigation-item">Home</li>
-        </ul>
-      </div>
+    <div id="top-nav-container">
+      <ul id="top-nav-items">
+        <li class="top-nav-item">Home</li>
+        <li class="top-nav-item">About</li>
+        <li class="top-nav-item">Skills</li>
+        <li class="top-nav-item">Projects</li>
+        <li class="top-nav-item">Contact</li>
+      </ul>
+    </div>
+
+    <!-- Hidden by default, shown securely on scroll or explicitly on mobile -->
+    <div id="side-nav-trigger">
+      <i class="ri-menu-2-line"></i>
+    </div>
+
+    <div id="full">
+        <h4>Home</h4>
+        <h4>About</h4>
+        <h4>Skills</h4>
+        <h4>Projects</h4>
+        <h4>Contact</h4>
+        <i class="ri-close-line"></i>
     </div>
     <div id="name-container">
       <p id="name">Naman<br />Sharma</p>
@@ -39,18 +65,96 @@
           id="cloud-background"
         ></video>
       </div>
-      <div id="about-us-heading">
-        <p id="about-us-text">About Me</p>
-      </div>
-      
-      <div class="about-img"></div>
-      <div id="about-content-container">
-        <div id="about-content"></div>
+
+      <div class="about-container">
+        <!-- Header Section -->
+        <div class="about-header">
+          <div class="about-title">
+            <h2 class="text-white">About</h2>
+            <h2 class="text-accent">Naman Sharma</h2>
+          </div>
+          <div class="about-bio">
+            <p>
+              I am a Computer Science undergrad at IIT Bhilai and a passionate Software Developer. I specialize in building high-performance, scalable web architectures and AI-driven systems. I thrive on engineering Multi-Agent RAG pipelines and distributed microservices.
+            </p>
+          </div>
+        </div>
+
+        <!-- Expertise Section -->
+        <div class="about-expertise">
+          <h3>Core Expertise <span class="text-accent">Focus Areas</span></h3>
+          <div class="expertise-pills-wrapper">
+            <div class="expertise-pills">
+              <!-- Set 1 -->
+              <span class="pill">Next.js</span>
+              <span class="pill">FastAPI</span>
+              <span class="pill">Docker</span>
+              <span class="pill">RAG Pipelines</span>
+              <span class="pill">Distributed Systems</span>
+              <span class="pill">Algorithms</span>
+              <span class="pill">Microservices</span>
+              <span class="pill">PostgreSQL</span>
+              <!-- Set 2 for seamless loop -->
+              <span class="pill">Next.js</span>
+              <span class="pill">FastAPI</span>
+              <span class="pill">Docker</span>
+              <span class="pill">RAG Pipelines</span>
+              <span class="pill">Distributed Systems</span>
+              <span class="pill">Algorithms</span>
+              <span class="pill">Microservices</span>
+              <span class="pill">PostgreSQL</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Media Grid Section -->
+        <div class="about-grid">
+          <div class="grid-left">
+            <img src="./public/mine.png" alt="Workspace" />
+          </div>
+          <div class="grid-right">
+            <div class="grid-top">
+              <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Team Discussion" />
+            </div>
+            <div class="grid-bottom stats-box">
+              <div class="stat">
+                <h4><span class="counter" data-target="2">0</span>+</h4>
+                <p>Years Coding</p>
+              </div>
+              <div class="stat">
+                <h4><span class="counter" data-target="20">0</span>+</h4>
+                <p>Projects</p>
+              </div>
+              <div class="stat">
+                <h4><span class="counter" data-target="1000">0</span>+</h4>
+                <p>Algo Problems</p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <div id="technical-skills">
-      Skills
+      <div id="tech-skills-heading">
+        <h2 class="section-title">Technical Skills</h2>
+        <p class="section-subtitle">Hover over the keys to explore my tech stack</p>
+      </div>
+      <div id="keyboard-wrapper">
+        <!-- The static HTML replaces the dynamically JS generated code -->
+        <!-- Just load the content generated from keyboard.html here dynamically using fetch or Server Side Includes if this was a backend. Since this is purely static frontend, we place the generated HTML blocks perfectly inside here, or keep the script if preferred. Let's physically inject the HTML. -->
+      </div>
     </div>
+
+    <!-- Modular JS -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"
+      integrity="sha512-NcZdtrT77bJr4STcmsGAESr06BYGE8woZdSdEgqnpyqac7sugNO+Tr4bGwGF3MsnEkGKhU2KL2xh6Ec+BqsaHA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script src="js/core.js"></script>
+    <script src="js/nav.js"></script>
+    <script src="js/about.js"></script>
+    <script src="js/keyboard.js"></script>
   </body>
-  <script src="script.js"></script>
 </html>
