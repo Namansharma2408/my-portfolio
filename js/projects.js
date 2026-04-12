@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (!projectsContainer) return;
 
   projectsContainer.innerHTML = `
-    <section class="projects-master-section" style="--project-count: ${projectData.length};">
+    <section class="projects-master-section " style="--project-count: ${projectData.length}; background: ${projectData[0].bg};">
       <div class="project-bg-stack swap-slot" id="slot-bg">
         <div class="swap-layer swap-current" id="bg-current"></div>
         <div class="swap-layer swap-next" id="bg-next"></div>
@@ -26,16 +26,14 @@ document.addEventListener("DOMContentLoaded", () => {
               <div class="swap-layer swap-next" id="image-next"></div>
             </div>
 
-            <div class="project-layout-text-wrap">
-              <div class="project-block swap-slot" id="slot-problem">
-                <div class="swap-layer swap-current" id="problem-current"></div>
-                <div class="swap-layer swap-next" id="problem-next"></div>
-              </div>
+            <div class="project-block swap-slot" id="slot-problem">
+              <div class="swap-layer swap-current" id="problem-current"></div>
+              <div class="swap-layer swap-next" id="problem-next"></div>
+            </div>
 
-              <div class="project-block swap-slot" id="slot-solution">
-                <div class="swap-layer swap-current" id="solution-current"></div>
-                <div class="swap-layer swap-next" id="solution-next"></div>
-              </div>
+            <div class="project-block swap-slot" id="slot-solution">
+              <div class="swap-layer swap-current" id="solution-current"></div>
+              <div class="swap-layer swap-next" id="solution-next"></div>
             </div>
           </div>
         </article>
@@ -51,6 +49,8 @@ document.addEventListener("DOMContentLoaded", () => {
       </div>
     </section>
   `;
+
+  const masterSection = projectsContainer.querySelector(".projects-master-section");
 
   /* ─── Slot references ─── */
   const slotBg       = document.querySelector("#slot-bg");
@@ -191,6 +191,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const proj      = projectData[index];
     const direction = (activeIndex === -1 || index > activeIndex) ? 1 : -1;
+
+    /* Update the section background dynamically as requested */
+    if (masterSection) {
+      masterSection.style.background = proj.bg;
+    }
 
     /* Paint without animation on first render */
     if (activeIndex === -1) {

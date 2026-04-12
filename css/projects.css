@@ -11,9 +11,14 @@
 /* ── Background stack ── */
 .project-bg-stack {
   position: absolute;
-  inset: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100vh;
+  position: sticky; /* Make it sticky so it follows the scroll */
   overflow: hidden;
   z-index: 0;
+  margin-bottom: -100vh; /* Displaces itself so the sticky shell sits overtop cleanly */
 }
 
 .project-bg-stack .swap-layer {
@@ -36,43 +41,45 @@
 
 /* ── Card ── */
 .project-stage-card {
-  width: min(1380px, 96vw);
-  min-height: min(88vh, 940px);
-  padding: clamp(1.2rem, 2.4vw, 2.4rem);
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  border-radius: 20px;
-  background: rgba(8, 10, 14, 0.54);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  position: relative; /* Restoring internal spacing and isolation */
+  width: min(1794px, 96vw);
+  min-height: min(88vh, 1222px);
+  padding: clamp(1.56rem, 3.12vw, 3.12rem);
   box-sizing: border-box;
   display: grid;
   grid-template-rows: auto 1fr;
-  gap: 1rem;
+  gap: 1.3rem;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 20px;
+  background: rgba(8, 10, 14, 0.6); /* Slightly visible glass pane holding everything cleanly */
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
 }
 
 /* ── Title slot ── */
 .project-title-slot {
   position: relative;
   overflow: hidden;
-  min-height: clamp(2.8rem, 5.2vw, 5rem);
+  min-height: clamp(3.64rem, 6.76vw, 6.5rem);
   border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 12px;
+  border-radius: 15px;
   background: rgba(10, 14, 20, 0.74);
 }
 
 .project-stage-title {
   margin: 0;
   font-family: var(--font-display);
-  font-size: clamp(2rem, 4.6vw, 4rem);
+  font-size: clamp(2.6rem, 5.98vw, 5.2rem);
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 1.3px;
 }
 
 /* ── Layout grid ── */
 .project-layout-grid {
   display: grid;
-  grid-template-columns: 62% 38%;
-  gap: clamp(1rem, 2vw, 1.5rem);
+  grid-template-columns: 7fr 3fr;
+  grid-template-rows: auto 1fr;
+  gap: clamp(1.3rem, 2.6vw, 1.95rem);
   min-height: 0;
 }
 
@@ -81,8 +88,8 @@
   min-height: 0;
   position: relative;
   overflow: hidden;
-  border-radius: 14px;
-  aspect-ratio: 16 / 10;
+  border-radius: 18px;
+  aspect-ratio: 16 / 9;
   background: #0b1018;
 }
 
@@ -90,32 +97,31 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 14px;
+  border-radius: 18px;
   border: 1px solid rgba(255, 255, 255, 0.16);
 }
 
 /* ── Text blocks ── */
-.project-layout-text-wrap {
-  min-height: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 0.85rem;
-}
-
 .project-block {
   padding: 0;
   background: transparent;
   border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 12px;
+  border-radius: 15px;
   position: relative;
   overflow: hidden;
-  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+#slot-solution {
+  grid-column: 1 / -1;
+  min-height: 0;
 }
 
 .project-block h3 {
-  margin: 0 0 0.8rem;
+  margin: 0 0 1.04rem;
   font-family: var(--font-display);
-  font-size: clamp(1.1rem, 1.6vw, 1.5rem);
+  font-size: clamp(1.43rem, 2.08vw, 1.95rem);
   color: var(--accent-primary);
   text-transform: uppercase;
 }
@@ -124,25 +130,25 @@
   margin: 0;
   line-height: 1.66;
   color: rgba(255, 255, 255, 0.88);
-  font-size: clamp(0.95rem, 1.02vw, 1.05rem);
-  max-height: 19vh;
+  font-size: clamp(1.23rem, 1.32vw, 1.36rem);
+  max-height: 100%;
   overflow: auto;
 }
 
 /* ── Tech tags ── */
 .project-tech-tags {
-  margin-top: 0.5rem;
+  margin-top: 0.65rem;
   display: flex;
   flex-wrap: wrap;
-  gap: 0.6rem;
+  gap: 0.78rem;
 }
 
 .tech-tag {
-  padding: 0.42rem 0.8rem;
+  padding: 0.55rem 1.04rem;
   border-radius: 999px;
   border: 1px solid rgba(255, 255, 255, 0.24);
   background: rgba(255, 255, 255, 0.08);
-  font-size: 0.8rem;
+  font-size: 1.04rem;
   color: #fff;
 }
 
@@ -177,10 +183,11 @@
   display: flex;
   align-items: center;
   box-sizing: border-box;
-  padding: 0.25rem 0.55rem;
+  padding: 0.32rem 0.71rem;
   background: rgba(10, 14, 20, 0.94);
   width: 100%;
   height: 100%;
+  color: var(--accent-primary);
 }
 
 #slot-problem .swap-layer,
@@ -188,13 +195,13 @@
   box-sizing: border-box;
   width: 100%;
   height: 100%;
-  padding: clamp(0.9rem, 1.8vw, 1.4rem);
+  padding: clamp(1.17rem, 2.34vw, 1.82rem);
   background: rgba(14, 18, 24, 0.94);
-  border-radius: 12px;
+  border-radius: 15px;
 }
 
 #slot-image .swap-layer {
-  border-radius: 14px;
+  border-radius: 18px;
   overflow: hidden;
   background: #0b1018;
   width: 100%;
@@ -234,7 +241,11 @@
 
   .project-layout-grid {
     grid-template-columns: 1fr;
-    grid-template-rows: 34vh 1fr;
+    grid-template-rows: 34vh auto auto;
+  }
+
+  #slot-solution {
+    grid-column: 1 / -1;
   }
 
   .project-block p {
