@@ -51,45 +51,45 @@ function createCurve(id, startX, startY, segments) {
 
 if (svg) {
   createCurve("curve1", 0, 0, [
-    { cx: height / 8, cy: height / 2, ex: height, ey: height / 2 },
+    { cx: width / 16, cy: height / 2, ex: height, ey: height / 2 },
     { cx: width, cy: height / 2, ex: width, ey: height / 2 },
   ]);
 
   createCurve("curve2", 0, height / 8, [
-    { cx: height / 8, cy: height / 2, ex: (height * 3) / 4, ey: height / 2 },
+    { cx: width / 16, cy: height / 2, ex: (height * 3) / 4, ey: height / 2 },
     { cx: width, cy: height / 2, ex: width, ey: height / 2 },
   ]);
 
   createCurve("curve3", 0, height / 4, [
-    { cx: height / 8, cy: height / 2, ex: height / 2, ey: height / 2 },
+    { cx: width / 16, cy: height / 2, ex: height / 2, ey: height / 2 },
     { cx: width, cy: height / 2, ex: width, ey: height / 2 },
   ]);
   createCurve("curve4", 0, (height * 3) / 8, [
-    { cx: height / 8, cy: height / 2, ex: height / 4, ey: height / 2 },
+    { cx: width / 16, cy: height / 2, ex: height / 4, ey: height / 2 },
     { cx: width, cy: height / 2, ex: width, ey: height / 2 },
   ]);
 
   createCurve("curve5", 0, height / 2, [
-    { cx: height / 8, cy: height / 2, ex: height, ey: height / 2 },
+    { cx: width / 16, cy: height / 2, ex: height, ey: height / 2 },
     { cx: width, cy: height / 2, ex: width, ey: height / 2 },
   ]);
 
   createCurve("curve6", 0, (height * 5) / 8, [
-    { cx: height / 8, cy: height / 2, ex: height / 4, ey: height / 2 },
+    { cx: width / 16, cy: height / 2, ex: height / 4, ey: height / 2 },
     { cx: width, cy: height / 2, ex: width, ey: height / 2 },
   ]);
   createCurve("curve7", 0, (height * 3) / 4, [
-    { cx: height / 8, cy: height / 2, ex: height / 2, ey: height / 2 },
+    { cx: width / 16, cy: height / 2, ex: height / 2, ey: height / 2 },
     { cx: width, cy: height / 2, ex: width, ey: height / 2 },
   ]);
 
   createCurve("curve8", 0, (height * 7) / 8, [
-    { cx: height / 8, cy: height / 2, ex: (height * 3) / 4, ey: height / 2 },
+    { cx: width / 16, cy: height / 2, ex: (height * 3) / 4, ey: height / 2 },
     { cx: width, cy: height / 2, ex: width, ey: height / 2 },
   ]);
 
   createCurve("curve9", 0, height, [
-    { cx: height / 8, cy: height / 2, ex: height, ey: height / 2 },
+    { cx: width / 16, cy: height / 2, ex: height, ey: height / 2 },
     { cx: width, cy: height / 2, ex: width, ey: height / 2 },
   ]);
 }
