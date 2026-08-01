@@ -65,24 +65,34 @@ body {
   z-index: -2;
 }
 #name-container {
+  position: relative;
   width: 100vw;
   height: 100vh;
   display: flex;
   justify-content: end;
   align-items: center;
-  background: transparent;
-  z-index: 10;
+
 }
+
+.server-img {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 60%;
+  z-index: 1;
+  filter: blur(16px);
+  
+}
+
 #name {
-  color: var(--text-primary);
-  background-color: transparent;
-  z-index: 10;
+  position: relative;
+  z-index: 2;
   font-size: 300px;
-  font-family: var(--font-display);
-  font-weight: 800;
   letter-spacing: -5px;
   line-height: 0.9;
   text-transform: uppercase;
+  font-weight: bold;
 }
 
 /* TOP NAVBAR: Visible on Desktop, Hidden on Mobile */

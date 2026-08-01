@@ -213,13 +213,14 @@
   font-size: 1.1rem;
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  transition: 0.3s ease;
+  transition: 0.3s ease-in-out;
 }
 
 .social-links a:hover {
   background: var(--accent-primary);
   color: black;
-  transform: translateY(-4px);
+  transform: translateY(-4px) scale(1.10);
+
 }
 
 /* RESPONSIVE */
