@@ -16,6 +16,11 @@
     <link rel="stylesheet" href="css/about.css" />
     <link rel="stylesheet" href="css/keyboard.css" />
     <link rel="stylesheet" href="css/projects.css" />
+    <link rel="stylesheet" href="css/contact.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
     <link
       rel="stylesheet"
       type="text/css"
@@ -25,13 +30,17 @@
       href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css"
       rel="stylesheet"
     />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
   </head>
   <body>
     <div class="animation">
       <svg id="canvas"></svg>
       <div class="glass-overlay"></div>
     </div>
-    <div class="grid-container"></div>
+    <!-- <div class="grid-container"></div> -->
     <div id="top-nav-container">
       <ul id="top-nav-items">
         <li class="top-nav-item">Home</li>
@@ -46,17 +55,25 @@
     <div id="side-nav-trigger">
       <i class="ri-menu-2-line"></i>
     </div>
-
-    <div id="full">
-      <h4>Home</h4>
-      <h4>About</h4>
-      <h4>Skills</h4>
-      <h4>Projects</h4>
-      <h4>Contact</h4>
-      <i class="ri-close-line"></i>
-    </div>
+    <nav id="full">
+      <i class="ri-close-line close-btn"></i>
+      <ul class="side-nav-list">
+        <li class="side-nav-item"><a href="#home">Home</a></li>
+        <li class="side-nav-item"><a href="#about">About</a></li>
+        <li class="side-nav-item"><a href="#skills">Skills</a></li>
+        <li class="side-nav-item"><a href="#projects">Projects</a></li>
+        <li class="side-nav-item"><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
     <div id="name-container">
       <p id="name">Naman<br />Sharma</p>
+    </div>
+    <div id='description'>
+      <p class="description-text">Full Stack Web Developer</p>
+      <span class="description-text">|</span>
+      <p class="description-text">Android Developer</p>
+      <span class="description-text">|</span>
+      <p class="description-text">AI Developer</p>
     </div>
     <div id="about-us">
       <div id="cloud-background-container">
@@ -65,7 +82,7 @@
           muted
           loop
           playsinline
-          src="./public/video.mp4"
+          src="https://res.cloudinary.com/dk6nbaps1/video/upload/v1776882872/video_klm52z.mp4"
           id="cloud-background"
         ></video>
       </div>
@@ -118,7 +135,10 @@
         <!-- Media Grid Section -->
         <div class="about-grid">
           <div class="grid-left">
-            <img src="./public/mine.png" alt="Workspace" />
+            <img
+              src="https://res.cloudinary.com/dk6nbaps1/image/upload/v1776882982/mine_swknwl.png"
+              alt="Workspace"
+            />
           </div>
           <div class="grid-right">
             <div class="grid-top">
@@ -129,7 +149,7 @@
             </div>
             <div class="grid-bottom stats-box">
               <div class="stat">
-                <h4><span class="counter" data-target="2">0</span>+</h4>
+                <h4><span class="counter" data-target="3">0</span>+</h4>
                 <p>Years Coding</p>
               </div>
               <div class="stat">
@@ -152,21 +172,75 @@
           Hover over the keys to explore my tech stack
         </p>
       </div>
-      <div id="keyboard-wrapper">
-        <!-- The static HTML replaces the dynamically JS generated code -->
-        <!-- Just load the content generated from keyboard.html here dynamically using fetch or Server Side Includes if this was a backend. Since this is purely static frontend, we place the generated HTML blocks perfectly inside here, or keep the script if preferred. Let's physically inject the HTML. -->
-      </div>
+      <div id="keyboard-wrapper"></div>
     </div>
-    <div class="projects" ></div>
+    <div class="projects"></div>
+    <section id="contact">
+      <div id="contact-header">
+        <span class="contact-subtitle">GET IN TOUCH</span>
+        <h2>Let's Create Something Amazing Together</h2>
+        <p>
+          Have an idea, project, opportunity, bug report, or just want to say
+          hello? My inbox is always open.
+        </p>
+      </div>
+
+      <div id="contact-content">
+        <!-- LEFT SIDE -->
+        <div id="contact-left">
+          <img
+            src="https://res.cloudinary.com/dk6nbaps1/image/upload/v1781607412/contact_js2qu8.png"
+            alt="Contact Illustration"
+            id="contact-img"
+          />
+          <div id="call-now-tagline">📞 Call Now Or Stay Confused</div>
+        </div>
+
+        <!-- RIGHT SIDE -->
+        <div id="contact-right">
+          <div id="contact-card">
+            <h3>Let's Build Something Awesome</h3>
+            <p class="card-description">
+              Whether you have a project, startup idea, freelance opportunity,
+              or just want to connect, I'd love to hear from you.
+            </p>
+            <form id="contact-form">
+              <input type="text" placeholder="Your Name" required />
+              <input type="email" placeholder="Your Email" required />
+              <textarea
+                rows="5"
+                placeholder="Tell me about your project..."
+                required
+              ></textarea>
+              <button type="submit">Send Message</button>
+            </form>
+            <div class="social-links">
+              <a href="#" title="Github">
+                <i class="fa-brands fa-github"></i>
+              </a>
+              <a href="#" title="LinkedIn">
+                <i class="fa-brands fa-linkedin-in"></i>
+              </a>
+              <a href="#" title="Instagram">
+                <i class="fa-brands fa-instagram"></i>
+              </a>
+              <a href="#" title="Email">
+                <i class="fa-solid fa-envelope"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
     <script type="application/json" id="project-data">
       [
         {
           "title": "Multi-Agent RAG System",
           "problem": "Knowledge-heavy workflows were slow and inconsistent because retrieval and generation were handled in one monolithic pipeline with weak context prioritization. As document volume grew, latency spiked, relevance dropped, and users often received fragmented answers with low traceability.",
           "solution": "Designed a multi-agent RAG architecture with dedicated retrieval, ranking, validation, and synthesis agents coordinated through a lightweight orchestration layer. Added chunk scoring, confidence checks, and caching to reduce hallucinations, improve factual grounding, and keep response latency stable even under higher traffic.",
-          "image": "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=80",
+          "image": "https://res.cloudinary.com/dk6nbaps1/image/upload/v1776886159/causal-ai_bfktpo.png",
           "tech": ["Python", "FastAPI", "LangChain", "VectorDB"],
-          "bg": "linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%)"
+          "bg": "linear-gradient(135deg, #050510 0%, #14142b 45%, #0b0b1a 100%)"
         },
         {
           "title": "Campus Microservices",
@@ -174,7 +248,7 @@
           "solution": "Built event-driven microservices for admissions, notices, and operations with asynchronous messaging, shared schemas, and resilient retry handling. Introduced centralized observability and contract validation to improve reliability, reduce turnaround time, and eliminate repetitive manual escalation cycles.",
           "image": "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1200&q=80",
           "tech": ["Node.js", "Docker", "RabbitMQ", "Redis"],
-          "bg": "linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%)"
+          "bg": "linear-gradient(135deg, #041015 0%, #0b232b 50%, #123640 100%)"
         },
         {
           "title": "NextGen Dashboard",
@@ -182,7 +256,7 @@
           "solution": "Implemented a high-performance analytics dashboard with incremental rendering, memoized data transforms, and stream-based updates for critical KPIs. Redesigned the information hierarchy, interaction states, and component density so teams could scan trends faster and make decisions with fewer context switches.",
           "image": "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=1200&q=80",
           "tech": ["Next.js", "TypeScript", "GSAP", "Tailwind"],
-          "bg": "linear-gradient(135deg, #141e30 0%, #243b55 100%)"
+          "bg": "linear-gradient(135deg, #080b12 0%, #121a2a 50%, #1b2740 100%)"
         }
       ]
     </script>

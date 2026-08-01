@@ -17,8 +17,9 @@ function createCurve(id, startX, startY, segments) {
   const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
   path.setAttribute("id", id);
   path.setAttribute("stroke", "white");
-  path.setAttribute("stroke-width", "0.5");
+  path.setAttribute("stroke-width", "0.01");
   path.setAttribute("fill", "none");
+  path.setAttribute("opacity", "0.2");
   path.setAttribute("d", buildPath(startX, startY, segments));
 
   const circle = document.createElementNS(
@@ -27,7 +28,7 @@ function createCurve(id, startX, startY, segments) {
   );
   circle.setAttribute("r", "10");
   circle.setAttribute("fill", "white");
-  circle.setAttribute("filter", "blur(30px)");
+  circle.setAttribute("opacity", "0.5");
 
   const animate = document.createElementNS(
     "http://www.w3.org/2000/svg",
