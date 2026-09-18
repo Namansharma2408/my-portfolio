@@ -1,4 +1,4 @@
-.projects {
+#projects {
   width: 100%;
   color: var(--text-primary);
 }
@@ -10,7 +10,6 @@
 
 /* ── Background stack ── */
 .project-bg-stack {
-  position: absolute;
   top: 0;
   left: 0;
   right: 0;
@@ -42,9 +41,9 @@
 /* ── Card ── */
 .project-stage-card {
   position: relative; /* Restoring internal spacing and isolation */
-  width: min(1794px, 96vw);
-  min-height: min(88vh, 1222px);
-  padding: clamp(1.56rem, 3.12vw, 3.12rem);
+  width: min(1200px, 94vw);
+  min-height: 70vh;
+  padding: clamp(1.25rem, 3vw, 2.5rem);
   box-sizing: border-box;
   display: grid;
   grid-template-rows: auto 1fr;
@@ -69,17 +68,18 @@
 .project-stage-title {
   margin: 0;
   font-family: var(--font-display);
-  font-size: clamp(2.6rem, 5.98vw, 5.2rem);
+  font-size: clamp(1.6rem, 4.5vw, 3.2rem);
   text-transform: uppercase;
   letter-spacing: 1.3px;
+  text-wrap: balance;
 }
 
 /* ── Layout grid ── */
 .project-layout-grid {
   display: grid;
-  grid-template-columns: 7fr 3fr;
+  grid-template-columns: 1.6fr 1fr;
   grid-template-rows: auto 1fr;
-  gap: clamp(1.3rem, 2.6vw, 1.95rem);
+  gap: clamp(1rem, 2.5vw, 1.75rem);
   min-height: 0;
 }
 
@@ -128,11 +128,10 @@
 
 .project-block p {
   margin: 0;
-  line-height: 1.66;
+  line-height: 1.6;
   color: rgba(255, 255, 255, 0.88);
-  font-size: clamp(1.23rem, 1.32vw, 1.36rem);
-  max-height: 100%;
-  overflow: auto;
+  font-size: clamp(0.95rem, 1.5vw, 1.15rem);
+  text-wrap: pretty;
 }
 
 /* ── Tech tags ── */
@@ -144,11 +143,11 @@
 }
 
 .tech-tag {
-  padding: 0.55rem 1.04rem;
+  padding: 0.5rem 1rem;
   border-radius: 999px;
   border: 1px solid rgba(255, 255, 255, 0.24);
   background: rgba(255, 255, 255, 0.08);
-  font-size: 1.04rem;
+  font-size: 0.95rem;
   color: #fff;
 }
 
@@ -171,11 +170,13 @@
   z-index: 1;
 }
 
-/* next layer is absolute so it doesn't push layout */
+/* next layer is absolute so it doesn't push layout; hidden until a swap runs */
 .swap-slot .swap-next {
   position: absolute;
   inset: 0;
   z-index: 2;
+  opacity: 0;
+  visibility: hidden;
 }
 
 /* Title and image slot layers need flex/full-size behaviour */
@@ -236,19 +237,38 @@
   }
 
   .project-stage-card {
-    min-height: 86vh;
+    min-height: auto;
+    max-height: 88vh;
+    max-height: 88dvh;
+    overflow-y: auto;
   }
 
   .project-layout-grid {
     grid-template-columns: 1fr;
-    grid-template-rows: 34vh auto auto;
+    grid-template-rows: auto auto auto;
+  }
+
+  .project-layout-image-wrap {
+    aspect-ratio: 16 / 10;
+    max-height: 32vh;
   }
 
   #slot-solution {
     grid-column: 1 / -1;
   }
-
-  .project-block p {
-    max-height: none;
-  }
+}
+.projects-fallback-card {
+  max-width: 1100px;
+  margin: 0 auto 2rem;
+  padding: 2rem;
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 16px;
+  background: rgba(8,10,14,0.7);
+}
+.projects-fallback-card img {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  display: block;
+  margin-bottom: 1rem;
 }

@@ -1,20 +1,46 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const projectData = JSON.parse(
-    document.getElementById("project-data").textContent
-  );
+  const dataEl = document.getElementById("project-data");
+  const projectsContainer = document.querySelector("#projects");
+  if (!dataEl || !projectsContainer) return;
 
-  const projectsContainer = document.querySelector(".projects");
-  if (!projectsContainer) return;
+  let projectData;
+  try {
+    projectData = JSON.parse(dataEl.textContent);
+  } catch (e) {
+    projectsContainer.innerHTML = `<section class="projects-master-section"><div class="projects-fallback-card"><h2>Projects</h2><p>Project data failed to load. Please refresh.</p></div></section>`;
+    return;
+  }
+  if (!Array.isArray(projectData) || projectData.length === 0) return;
+
+  const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+
+  // Fallback when GSAP/ScrollTrigger CDN is blocked: render static cards.
+  if (!window.gsap || !window.ScrollTrigger) {
+    projectsContainer.innerHTML = `
+      <section class="projects-master-section" aria-label="Projects" style="min-height:auto;padding:4rem 1rem;">
+        <h2 class="section-title" style="text-align:center;margin-bottom:2rem;">Projects</h2>
+        ${projectData.map((p) => `
+          <article class="projects-fallback-card">
+            <h3>${esc(p.title)}</h3>
+            <img src="${esc(p.image)}" alt="${esc(p.title)}" loading="lazy" decoding="async" />
+            <h4>Problem</h4><p>${esc(p.problem)}</p>
+            <h4>Solution</h4><p>${esc(p.solution)}</p>
+            <div class="project-tech-tags">${(p.tech || []).map((t) => `<span class="tech-tag">${esc(t)}</span>`).join("")}</div>
+          </article>`).join("")}
+      </section>`;
+    return;
+  }
 
   projectsContainer.innerHTML = `
-    <section class="projects-master-section " style="--project-count: ${projectData.length}; background: ${projectData[0].bg};">
+    <section class="projects-master-section" aria-label="Projects" style="--project-count: ${projectData.length}; background: ${esc(projectData[0].bg)};">
+      <h2 class="sr-only">Projects</h2>
       <div class="project-bg-stack swap-slot" id="slot-bg">
         <div class="swap-layer swap-current" id="bg-current"></div>
         <div class="swap-layer swap-next" id="bg-next"></div>
       </div>
 
       <div class="project-sticky-shell">
-        <article class="project-stage-card" id="project-stage-card">
+        <article class="project-stage-card" id="project-stage-card" aria-live="polite">
           <div class="project-title-slot swap-slot" id="slot-title">
             <div class="swap-layer swap-current" id="title-current"></div>
             <div class="swap-layer swap-next" id="title-next"></div>
@@ -52,12 +78,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const masterSection = projectsContainer.querySelector(".projects-master-section");
 
-  /* ─── Slot references ─── */
-  const slotBg       = document.querySelector("#slot-bg");
-  const slotTitle    = document.querySelector("#slot-title");
-  const slotImage    = document.querySelector("#slot-image");
-  const slotProblem  = document.querySelector("#slot-problem");
-  const slotSolution = document.querySelector("#slot-solution");
+  /* ─── Slot references (scoped to container) ─── */
+  const slotBg       = projectsContainer.querySelector("#slot-bg");
+  const slotTitle    = projectsContainer.querySelector("#slot-title");
+  const slotImage    = projectsContainer.querySelector("#slot-image");
+  const slotProblem  = projectsContainer.querySelector("#slot-problem");
+  const slotSolution = projectsContainer.querySelector("#slot-solution");
 
   if (!slotBg || !slotTitle || !slotImage || !slotProblem || !slotSolution) return;
 
@@ -72,8 +98,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   /* ─── Swap engine state ─── */
-  const SWAP_MS      = 520;           // must match CSS --swap-duration
-  const STAGGER_PX   = 36;           // vertical stagger between slots
+  const SWAP_MS      = 520;
   let   activeIndex  = -1;
   let   isAnimating  = false;
   let   pendingIndex = null;          // index queued while animation runs
@@ -94,16 +119,16 @@ document.addEventListener("DOMContentLoaded", () => {
     return p;
   };
 
-  /* ─── Content writers ─── */
+  /* ─── Content writers (escaped) ─── */
   const writers = {
     [slotBg.id]:       (el, p) => { el.style.background = p.bg; },
-    [slotTitle.id]:    (el, p) => { el.innerHTML = `<h2 class="project-stage-title">${p.title}</h2>`; },
-    [slotImage.id]:    (el, p) => { el.innerHTML = `<img src="${p.image}" alt="${p.title}" loading="eager"/>`; },
-    [slotProblem.id]:  (el, p) => { el.innerHTML = `<h3>Problem</h3><p>${p.problem}</p>`; },
+    [slotTitle.id]:    (el, p) => { el.innerHTML = `<h2 class="project-stage-title">${esc(p.title)}</h2>`; },
+    [slotImage.id]:    (el, p) => { el.innerHTML = `<img src="${esc(p.image)}" alt="${esc(p.title)}" loading="eager" decoding="async"/>`; },
+    [slotProblem.id]:  (el, p) => { el.innerHTML = `<h3>Problem</h3><p>${esc(p.problem)}</p>`; },
     [slotSolution.id]: (el, p) => {
-      el.innerHTML = `<h3>Solution</h3><p>${p.solution}</p>
+      el.innerHTML = `<h3>Solution</h3><p>${esc(p.solution)}</p>
         <div class="project-tech-tags">
-          ${p.tech.map((t) => `<span class="tech-tag">${t}</span>`).join("")}
+          ${(p.tech || []).map((t) => `<span class="tech-tag">${esc(t)}</span>`).join("")}
         </div>`;
     },
   };
@@ -134,11 +159,9 @@ document.addEventListener("DOMContentLoaded", () => {
       allSlots.forEach((slot, i) => {
         const { current, next } = slotState.get(slot);
         const delay    = i * 0.038;
-        const enterY   = forward ?  "102%" : "-102%";
-        const exitY    = forward ? "-4%"   :  "4%";
 
         /* Snap next into start position instantly */
-        gsap.set(next, { yPercent: forward ? 102 : -102, opacity: 1, zIndex: 2 });
+        gsap.set(next, { yPercent: forward ? 102 : -102, opacity: 1, zIndex: 2, visibility: "visible" });
         gsap.set(current, { zIndex: 1 });
 
         /* Animate both layers simultaneously */
@@ -166,7 +189,7 @@ document.addEventListener("DOMContentLoaded", () => {
           next.classList.add("swap-current");
 
           /* Reset outgoing layer */
-          gsap.set(current, { yPercent: 0, opacity: 1, zIndex: 0 });
+          gsap.set(current, { yPercent: 0, opacity: 1, zIndex: 0, visibility: "hidden" });
           if (slot.id === "slot-bg") current.style.background = "";
           else current.innerHTML = "";
 
@@ -230,7 +253,7 @@ document.addEventListener("DOMContentLoaded", () => {
   /* ─── ScrollTrigger wiring ─── */
   gsap.registerPlugin(ScrollTrigger);
 
-  const steps     = document.querySelectorAll(".project-index-step");
+  const steps     = projectsContainer.querySelectorAll(".project-index-step");
   let   lastIndex = -1;
 
   steps.forEach((step) => {
@@ -278,5 +301,10 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       },
     });
+  });
+
+  // Recalculate trigger positions after images/fonts load.
+  window.addEventListener("load", () => {
+    try { ScrollTrigger.refresh(); } catch (e) {}
   });
 });

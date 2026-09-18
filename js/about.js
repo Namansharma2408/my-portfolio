@@ -1,59 +1,338 @@
-const video = document.getElementById("cloud-background");
-if (video) video.playbackRate = 0.6;
+document.addEventListener("DOMContentLoaded", () => {
+  "use strict";
 
-window.addEventListener("load", () => {
-  const aboutSection = document.getElementById("about-us");
-  
-  if (!aboutSection) return;
+  /* =========================================================
+     ABOUT SECTION
+  ========================================================= */
 
-  const elementsToAnimate = [
-    document.querySelector(".about-header"),
-    document.querySelector(".about-expertise"),
-    document.querySelector(".grid-left"),
-    document.querySelector(".grid-top"),
-    document.querySelector(".grid-bottom")
-  ];
+  const aboutSection =
+    document.getElementById("about-us");
 
-  elementsToAnimate.forEach((el, index) => {
-    if (!el) return;
-    el.style.opacity = "0";
-    el.style.transform = "translateY(30px)";
-    el.style.transition = `all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) ${index * 0.15}s`;
-  });
+  if (!aboutSection) {
+    return;
+  }
 
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        elementsToAnimate.forEach((el) => {
-          if (!el) return;
-          el.style.opacity = "1";
-          el.style.transform = "translateY(0)";
-          
-          if (el.classList.contains("stats-box")) {
-            const counters = el.querySelectorAll(".counter");
-            counters.forEach((counter) => {
-              const target = +counter.getAttribute("data-target");
-              const duration = 2000; // Total duration in ms
-              const stepTime = 20;   // Update every 20 ms
-              const increment = target / (duration / stepTime);
-              let current = 0;
 
-              const timer = setInterval(() => {
-                current += increment;
-                if (current >= target) {
-                  current = target;
-                  clearInterval(timer);
-                }
-                counter.innerText = Math.floor(current);
-              }, stepTime);
-            });
-          }
+  /* =========================================================
+     REDUCED MOTION
+  ========================================================= */
+
+  const reduceMotion =
+    window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+
+
+  /* =========================================================
+     BACKGROUND VIDEO
+  ========================================================= */
+
+  const video =
+    document.getElementById("cloud-background");
+
+
+  if (video) {
+
+    if (reduceMotion) {
+
+      video.pause();
+
+      video.removeAttribute("autoplay");
+
+    } else {
+
+      /*
+       * Slightly slower background movement.
+       */
+
+      video.playbackRate = 0.6;
+
+
+      /*
+       * Calling play() manually makes the video
+       * more reliable when the browser allows autoplay.
+       */
+
+      const playPromise =
+        video.play();
+
+
+      if (
+        playPromise &&
+        typeof playPromise.catch === "function"
+      ) {
+
+        playPromise.catch(() => {
+          /*
+           * Autoplay was blocked.
+           * This is harmless.
+           */
         });
 
-        observer.unobserve(entry.target);
       }
-    });
-  }, { threshold: 0.15 });
 
-  observer.observe(aboutSection);
+    }
+
+  }
+
+
+  /* =========================================================
+     COUNTERS
+  ========================================================= */
+
+  const counters =
+    aboutSection.querySelectorAll(
+      ".counter"
+    );
+
+
+  const animatedCounters =
+    new WeakSet();
+
+
+  function animateCounter(counter) {
+
+    if (
+      animatedCounters.has(counter)
+    ) {
+      return;
+    }
+
+
+    animatedCounters.add(counter);
+
+
+    const target =
+      Number(
+        counter.dataset.target
+      ) || 0;
+
+
+    const duration = 1500;
+
+    const startTime =
+      performance.now();
+
+
+    function updateCounter(currentTime) {
+
+      const elapsed =
+        currentTime - startTime;
+
+
+      const progress =
+        Math.min(
+          elapsed / duration,
+          1
+        );
+
+
+      /*
+       * Ease-out cubic.
+       */
+
+      const eased =
+        1 -
+        Math.pow(
+          1 - progress,
+          3
+        );
+
+
+      const current =
+        Math.floor(
+          target * eased
+        );
+
+
+      counter.textContent =
+        current.toLocaleString(
+          "en-US"
+        );
+
+
+      if (progress < 1) {
+
+        requestAnimationFrame(
+          updateCounter
+        );
+
+      } else {
+
+        counter.textContent =
+          target.toLocaleString(
+            "en-US"
+          );
+
+      }
+
+    }
+
+
+    requestAnimationFrame(
+      updateCounter
+    );
+
+  }
+
+
+  /* =========================================================
+     REDUCED MOTION
+  ========================================================= */
+
+  if (reduceMotion) {
+
+    aboutSection.classList.add(
+      "about-visible"
+    );
+
+
+    counters.forEach((counter) => {
+
+      const target =
+        Number(
+          counter.dataset.target
+        ) || 0;
+
+
+      counter.textContent =
+        target.toLocaleString(
+          "en-US"
+        );
+
+    });
+
+
+    return;
+
+  }
+
+
+  /* =========================================================
+     ABOUT REVEAL
+  ========================================================= */
+
+  const aboutObserver =
+    new IntersectionObserver(
+      (entries, observer) => {
+
+        entries.forEach((entry) => {
+
+          if (!entry.isIntersecting) {
+            return;
+          }
+
+
+          aboutSection.classList.add(
+            "about-visible"
+          );
+
+
+          observer.unobserve(
+            entry.target
+          );
+
+        });
+
+      },
+      {
+        threshold: 0.12,
+
+        rootMargin:
+          "0px 0px -6% 0px"
+      }
+    );
+
+
+  aboutObserver.observe(
+    aboutSection
+  );
+
+
+  /* =========================================================
+     STATS COUNTER OBSERVER
+  ========================================================= */
+
+  const statsBox =
+    aboutSection.querySelector(
+      ".stats-box"
+    );
+
+
+  if (statsBox) {
+
+    const statsObserver =
+      new IntersectionObserver(
+        (entries, observer) => {
+
+          entries.forEach((entry) => {
+
+            if (
+              !entry.isIntersecting
+            ) {
+              return;
+            }
+
+
+            counters.forEach(
+              animateCounter
+            );
+
+
+            observer.unobserve(
+              entry.target
+            );
+
+          });
+
+        },
+        {
+          threshold: 0.25
+        }
+      );
+
+
+    statsObserver.observe(
+      statsBox
+    );
+
+  }
+
+
+  /* =========================================================
+     PAUSE MARQUEE WHEN TAB IS HIDDEN
+  ========================================================= */
+
+  document.addEventListener(
+    "visibilitychange",
+    () => {
+
+      const pills =
+        aboutSection.querySelector(
+          ".expertise-pills"
+        );
+
+
+      if (!pills) {
+        return;
+      }
+
+
+      if (
+        document.hidden
+      ) {
+
+        pills.style.animationPlayState =
+          "paused";
+
+      } else {
+
+        pills.style.animationPlayState =
+          "running";
+
+      }
+
+    }
+  );
+
 });

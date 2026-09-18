@@ -1,12 +1,33 @@
 document.addEventListener("DOMContentLoaded", () => {
+  const trigger = document.querySelector("#side-nav-trigger")
   const menu = document.querySelector("#side-nav-trigger i")
+  const drawer = document.querySelector("#full")
   const cross = document.querySelector(".close-btn")
-  const triggerContainer = document.querySelector("#side-nav-trigger")
 
-  if (!menu || !cross || !triggerContainer) return
+  if (!drawer || !trigger || !cross) return
+
+  // Fallback when GSAP CDN fails: use a CSS class toggle instead.
+  if (!window.gsap) {
+    drawer.style.transform = "none"
+    drawer.style.visibility = "visible"
+    drawer.style.display = "none"
+    const toggleFallback = (open) => {
+      drawer.style.display = open ? "flex" : "none"
+      trigger.setAttribute("aria-expanded", String(open))
+      document.body.style.overflow = open ? "hidden" : ""
+    }
+    trigger.addEventListener("click", () => toggleFallback(drawer.style.display === "none"))
+    cross.addEventListener("click", () => toggleFallback(false))
+    document.querySelectorAll(".side-nav-item a").forEach((link) => {
+      link.addEventListener("click", () => toggleFallback(false))
+    })
+    if (window.innerWidth <= 768) trigger.style.display = "block"
+    return
+  }
 
   gsap.set("#full", {
-    x: "100%",
+    x: "102%",
+    visibility: "visible",
   })
 
   gsap.set(".side-nav-item", {
@@ -22,13 +43,20 @@ document.addEventListener("DOMContentLoaded", () => {
   const tl = gsap.timeline({
     paused: true,
     reversed: true,
+    onReverseComplete: () => {
+      gsap.set("#full", { visibility: "hidden" })
+      document.body.style.overflow = ""
+      trigger.setAttribute("aria-expanded", "false")
+      trigger.focus({ preventScroll: true })
+    },
   })
 
-  tl.to("#full", {
-    x: 0,
-    duration: 0.6,
-    ease: "power3.inOut",
-  })
+  tl.set("#full", { visibility: "visible" })
+    .to("#full", {
+      x: 0,
+      duration: 0.6,
+      ease: "power3.inOut",
+    })
 
     .to(
       ".side-nav-item",
@@ -53,38 +81,60 @@ document.addEventListener("DOMContentLoaded", () => {
       "-=0.35",
     )
 
-  menu.addEventListener("click", () => {
-    gsap.set("#full", {
-      width: window.innerWidth <= 768 ? "60vw" : "30vw",
-    })
-
+  const openDrawer = () => {
+    document.body.style.overflow = "hidden"
+    trigger.setAttribute("aria-expanded", "true")
     tl.play()
-  })
+    cross.focus({ preventScroll: true })
+  }
 
-  cross.addEventListener("click", () => {
+  const closeDrawer = () => {
     tl.reverse()
-  })
+  }
+
+  const isOpen = () => !tl.reversed() && tl.progress() > 0
+
+  const activate = (fn) => (e) => {
+    if (e.type === "keydown" && e.key !== "Enter" && e.key !== " ") return
+    if (e.type === "keydown") e.preventDefault()
+    fn()
+  }
+
+  trigger.addEventListener("click", openDrawer)
+  trigger.addEventListener("keydown", activate(openDrawer))
+  cross.addEventListener("click", closeDrawer)
+  cross.addEventListener("keydown", activate(closeDrawer))
 
   document.querySelectorAll(".side-nav-item a").forEach((link) => {
     link.addEventListener("click", () => {
-      tl.reverse()
+      closeDrawer()
     })
+  })
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && isOpen()) closeDrawer()
+  })
+
+  document.addEventListener("click", (e) => {
+    if (isOpen() && !drawer.contains(e.target) && !trigger.contains(e.target)) {
+      closeDrawer()
+    }
   })
 
   function updateTrigger() {
     if (window.innerWidth <= 768) {
-      triggerContainer.style.display = "block"
+      trigger.style.display = "block"
     } else {
-      triggerContainer.style.display = window.scrollY > 100 ? "block" : "none"
+      trigger.style.display = window.scrollY > 100 ? "block" : "none"
 
-      if (window.scrollY <= 100 && !tl.reversed()) {
-        tl.reverse()
+      if (window.scrollY <= 100 && isOpen()) {
+        closeDrawer()
       }
     }
   }
 
   updateTrigger()
 
-  window.addEventListener("scroll", updateTrigger)
+  window.addEventListener("scroll", updateTrigger, { passive: true })
   window.addEventListener("resize", updateTrigger)
 })

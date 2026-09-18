@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
         label: "2",
         width: 1,
         type: "image",
-        color: "#000020",
+        color: "#ffffff",
         content: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/expo/expo-original.svg",
       },
       {
@@ -133,14 +133,14 @@ fill="currentColor" viewBox="0 0 24 24" >
         label: "W",
         width: 1,
         type: "image",
-        color: "#000000",
+        color: "#ffffff",
         content: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/flask/flask-original.svg",
       },
       {
         label: "E",
         width: 1,
         type: "image",
-        color: "#000000",
+        color: "#ffffff",
         content: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/express/express-original.svg",
       },
       {
@@ -154,14 +154,14 @@ fill="currentColor" viewBox="0 0 24 24" >
         label: "T",
         width: 1,
         type: "image",
-        color: "#000000",
+        color: "#ffffff",
         content: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/threejs/threejs-original.svg",
       },
       {
         label: "Y",
         width: 1,
         type: "image",
-        color: "#000000",
+        color: "#ffffff",
         content: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/bun/bun-original.svg",
       },
       {
@@ -373,7 +373,7 @@ fill="currentColor" viewBox="0 0 24 24" >
         label: "N",
         width: 1,
         type: "svg",
-        color: "#000000",
+        color: "#ffffff",
         content:
           '<img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nextjs/nextjs-original.svg" width="20" height="20" />',
       },
@@ -460,18 +460,19 @@ fill="currentColor" viewBox="0 0 24 24" >
       },
     ],
   ];
+  
   let keyboardRowsHtml = "";
 
   keyboardConfig.forEach((row, rowIdx) => {
-    let rowHtml = `<div class="keyboard-row">`;
+    let rowHtml = `<div class="keyboard-row" role="list">`;
     row.forEach((keyConfig, keyIdx) => {
       let keyContent = `<span class="key-text">${keyConfig.content}</span>`;
 
-      if (keyConfig.type === "svg" || keyConfig.type === "html") {
+      if (keyConfig.type === "svg" || keyConfig.type === "html" || /<\s*img/i.test(keyConfig.content)) {
         let contentStripped = keyConfig.content.replace(/width=["'][^"']+["']/i, '').replace(/height=["'][^"']+["']/i, '');
         keyContent = contentStripped;
       } else if (keyConfig.type === "image") {
-        keyContent = `<img src="${keyConfig.content}" alt="${keyConfig.label}"  />`;
+        keyContent = `<img src="${keyConfig.content}" alt="" loading="lazy" decoding="async" />`;
       }
 
       // Try to determine technology name from image URL or label
@@ -494,7 +495,7 @@ fill="currentColor" viewBox="0 0 24 24" >
           if (lbl === "U") techName = "ubuntu";
         }
       }
-      
+
       const techMappings = {
         "amazonwebservices": "AWS",
         "cplusplus": "C++",
@@ -508,17 +509,19 @@ fill="currentColor" viewBox="0 0 24 24" >
         "archlinux": "Arch",
         "vscode": "VS Code"
       };
-      
+
       if (techName) {
         techName = techMappings[techName.toLowerCase()] || techName.charAt(0).toUpperCase() + techName.slice(1);
       }
 
       const width = keyConfig.width;
-      const delay = rowIdx * 0.3 + keyIdx * 0.02;
       const hoverColor = keyConfig.color || "#ffffff";
+      const safeLabel = String(keyConfig.label).replace(/[^a-zA-Z0-9]+/g, "-") || `r${rowIdx}k${keyIdx}`;
+      const keyId = `key-${rowIdx}-${keyIdx}-${safeLabel}`;
+      const ariaLabel = techName ? `${techName} (keyboard key ${keyConfig.label})` : `Keyboard key ${keyConfig.label}`;
 
       rowHtml += `
-        <div id="key-${keyConfig.label.toUpperCase()}" class="key-container" style="--key-width: ${width * 7}rem; --anim-delay: ${delay}s; --hover-color: ${hoverColor};" data-label="${keyConfig.label}">
+        <div id="${keyId}" class="key-container" role="listitem" tabindex="0" aria-label="${ariaLabel}" style="--kw: ${width}; --hover-color: ${hoverColor};" data-label="${keyConfig.label}" data-tech="${techName}">
           <div class="key-shadow-base"></div>
           <div class="key-body">
             <div class="key-top-highlight"></div>
@@ -553,32 +556,120 @@ fill="currentColor" viewBox="0 0 24 24" >
   // Append inside wrapper (preserving any existing glows/shadows)
   keyboardWrapper.insertAdjacentHTML("beforeend", keyboardInnerHtml);
 
+  // Auto-fit: size --kb-unit so rows fill the wrapper, then shrink until
+  // the *visual* (post-3D-transform) key edges sit inside the wrapper.
+  const visualOverflow = () => {
+    const wr = keyboardWrapper.getBoundingClientRect();
+    let maxOver = 0;
+    keyboardWrapper.querySelectorAll(".keyboard-row").forEach((row) => {
+      const keys = row.querySelectorAll(".key-container");
+      if (!keys.length) return;
+      const f = keys[0].getBoundingClientRect();
+      const l = keys[keys.length - 1].getBoundingClientRect();
+      maxOver = Math.max(maxOver, wr.left - f.left, l.right - wr.right);
+    });
+    return maxOver;
+  };
+
+  const fitKeyboard = () => {
+    const inner = keyboardWrapper.querySelector(".keyboard-inner");
+    if (!inner) return;
+    const available = keyboardWrapper.clientWidth;
+    if (available <= 0) return;
+
+    // Step 1: fill step — scale unit so layout width matches wrapper.
+    const currentUnit =
+      parseFloat(getComputedStyle(keyboardWrapper).getPropertyValue("--kb-unit")) || 64;
+    const currentWidth = inner.scrollWidth || inner.offsetWidth;
+    if (!currentWidth) return;
+    let unit = (currentUnit * available) / currentWidth;
+    unit = Math.max(14, Math.min(96, unit));
+    keyboardWrapper.style.setProperty("--kb-unit", `${unit.toFixed(2)}px`);
+
+    // Step 2: shrink-only loop on the true visual metric (covers perspective
+    // widening from rotateX, borders, and sub-pixel rounding).
+    for (let i = 0; i < 4; i++) {
+      const over = visualOverflow();
+      if (over <= 1) break;
+      const w = inner.scrollWidth || 1;
+      unit = Math.max(14, (unit * (w - (over + 3))) / w);
+      keyboardWrapper.style.setProperty("--kb-unit", `${unit.toFixed(2)}px`);
+    }
+  };
+
+  fitKeyboard();
+  // Refit after webfonts/icons load (widths change) and on resize.
+  if (document.fonts?.ready) document.fonts.ready.then(() => fitKeyboard());
+  window.addEventListener("load", fitKeyboard);
+  let fitTimer;
+  window.addEventListener("resize", () => {
+    clearTimeout(fitTimer);
+    fitTimer = setTimeout(fitKeyboard, 150);
+  });
+  if ("ResizeObserver" in window) {
+    new ResizeObserver(() => fitKeyboard()).observe(keyboardWrapper);
+  }
+  // Images inside keys change size once loaded — refit then too.
+  keyboardWrapper.querySelectorAll("img").forEach((img) => {
+    if (!img.complete) img.addEventListener("load", fitKeyboard, { once: true });
+  });
+
   // Add hover event listener for all keys
   const keys = keyboardWrapper.querySelectorAll(".key-container");
 
-  // Load a reliable mechanical keystroke sound
+  // Mechanical keyboard click sound (with graceful fallback when offline/blocked)
   const clickSoundUrl = "https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3";
-  const baseAudio = new Audio(clickSoundUrl);
-  baseAudio.preload = "auto";
+  let baseAudio = null;
+  try {
+    baseAudio = new Audio(clickSoundUrl);
+    baseAudio.preload = "auto";
+    baseAudio.volume = 0.5;
+  } catch (e) {
+    baseAudio = null;
+  }
 
   // Mechanical keyboard click sound
   const playClickSound = () => {
-    // Clone the node to allow overlapping sounds when typing rapidly
-    const audioClone = baseAudio.cloneNode();
-    audioClone.volume = 1; // adjust volume
-    audioClone.play().catch((e) => console.log("Audio disabled by browser auto-play policy: ", e));
+    if (!baseAudio) return;
+    try {
+      // Clone the node to allow overlapping sounds when typing rapidly
+      const audioClone = baseAudio.cloneNode();
+      audioClone.volume = 0.5; // keep it subtle
+      audioClone.play().catch(() => {});
+    } catch (e) {}
+  };
+
+  const pressKey = (key) => {
+    playClickSound();
+    key.classList.add('active-press');
+    setTimeout(() => key.classList.remove('active-press'), 120);
   };
 
   keys.forEach((key) => {
-    key.addEventListener("mouseenter", () => {
-      console.log(`Hovering over: ${key.dataset.label}`);
+    // Play sound on click/press down (pointer covers mouse + touch)
+    key.addEventListener("pointerdown", () => {
+      pressKey(key);
     });
-    
-    // Play sound on click/press down
-    key.addEventListener("mousedown", () => {
-      playClickSound();
+    key.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        pressKey(key);
+      }
     });
   });
+
+  const normalizePhysicalKey = (eventKey) => {
+    if (eventKey === " ") return "SPACE";
+    const map = {
+      "Escape": "ESC",
+      "Backspace": "BKSP",
+      "Delete": "BKSP",
+      " ": "SPACE",
+      "Spacebar": "SPACE",
+    };
+    if (map[eventKey]) return map[eventKey];
+    return String(eventKey).toUpperCase();
+  };
 
   const initKeyboardListener = () => {
     const handlePhysicalKeyDown = (event) => {
@@ -592,34 +683,42 @@ fill="currentColor" viewBox="0 0 24 24" >
         // Skip if user is holding Ctrl, Alt, or Cmd (System Shortcuts)
         if (event.ctrlKey || event.altKey || event.metaKey) return;
 
-        // Skip if user is focused on an input or textarea
-        const activeTag = document.activeElement?.tagName;
-        if (activeTag === 'INPUT' || activeTag === 'TEXTAREA') return;
+        // Skip if user is focused on an editable field or interactive control
+        const activeEl = document.activeElement;
+        const activeTag = activeEl?.tagName;
+        if (activeTag === 'INPUT' || activeTag === 'TEXTAREA' || activeTag === 'SELECT' || activeEl?.isContentEditable) return;
 
-        // 3. NORMALIZE KEY
-        const pressedKey = event.key.toUpperCase();
+        // Never hijack Tab — it must move focus for keyboard users.
+        if (event.key === "Tab") return;
 
-        // 4. LOOKUP IN YOUR CONFIG
-        // Assuming keyboardConfig is available in global scope
+        // 3. NORMALIZE KEY (Esc -> ESC, Space -> SPACE, Backspace -> BKSP)
+        const pressedKey = normalizePhysicalKey(event.key);
+
+        // 4. LOOKUP IN YOUR CONFIG (match multiple keys, e.g. two Shifts)
         const flatConfig = keyboardConfig.flat();
-        const targetKey = flatConfig.find(k => k.label.toUpperCase() === pressedKey);
+        const hasMatch = flatConfig.some(k => {
+          const normalized = normalizePhysicalKey(k.label === "Space" ? " " : k.label);
+          return normalized === pressedKey || k.label.toUpperCase() === pressedKey;
+        });
 
-        if (targetKey) {
-            // OPTIONAL: Prevent default for specific keys like Space or Tab
-            // only if they are actually mapped in your config
-            if ([' ', 'TAB'].includes(pressedKey)) {
+        if (hasMatch) {
+            // Only prevent default for Space to avoid page scroll; never for Tab.
+            if (pressedKey === 'SPACE') {
                 event.preventDefault();
             }
 
             // TRIGGER SOUND (Using your existing sound logic)
             playClickSound();
 
-            // VISUAL FEEDBACK
-            const element = document.getElementById(`key-${pressedKey}`);
-            if (element) {
+            // VISUAL FEEDBACK (all matching keys, e.g. left/right Shift)
+            const elements = keyboardWrapper.querySelectorAll(`[data-label]`);
+            elements.forEach((element) => {
+              const normalized = normalizePhysicalKey(element.dataset.label === "Space" ? " " : element.dataset.label);
+              if (normalized === pressedKey || element.dataset.label.toUpperCase() === pressedKey) {
                 element.classList.add('active-press');
-                setTimeout(() => element.classList.remove('active-press'), 100);
-            }
+                setTimeout(() => element.classList.remove('active-press'), 120);
+              }
+            });
         }
     };
 
@@ -633,6 +732,5 @@ fill="currentColor" viewBox="0 0 24 24" >
   };
 
   // Usage:
-  const cleanup = initKeyboardListener();
-  // When switching screens: cleanup();
+  initKeyboardListener();
 });

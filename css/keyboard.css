@@ -1,234 +1,1344 @@
+/* =========================================================
+   TECHNICAL SKILLS — PREMIUM KEYBOARD
+   Drop-in replacement for the existing keyboard CSS.
+
+   Assumes the existing HTML/JS uses:
+   #technical-skills
+   #tech-skills-heading
+   #keyboard-wrapper
+   .keyboard-body
+   .keyboard-inner
+   .keyboard-rows
+   .keyboard-row
+   .key-container
+   .key-shadow-base
+   .key-body
+   .key-content
+   .tech-name
+   .key-text
+
+   Existing CSS variables used by the page are preserved:
+   --text-primary
+   --text-secondary
+   --font-display
+   --font-main
+   --accent-primary
+   ========================================================= */
+
+
+/* ---------------------------------------------------------
+   SECTION
+   --------------------------------------------------------- */
+
 #technical-skills {
+  --tech-bg: #050607;
+  --keyboard-bg: #0d1014;
+  --keyboard-surface: #111419;
+  --key-bg: #191d23;
+  --key-bg-hover: #20252c;
+  --key-border: #303640;
+  --key-border-dark: #12151a;
+  --key-text: #f5f7fa;
+  --key-muted: #8b929d;
+
+  position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+
   min-height: 100vh;
-  position: relative;
-  gap: 4rem;
+  padding: 7rem 1rem 8rem;
+  gap: 2.75rem;
+
+  overflow: hidden;
+  isolation: isolate;
 }
 
+
+/* Very subtle ambient lighting behind the keyboard. */
+
+#technical-skills::before {
+  content: "";
+  position: absolute;
+  z-index: -2;
+
+  width: min(80vw, 1100px);
+  height: 450px;
+
+  left: 50%;
+  top: 55%;
+
+  transform: translate(-50%, -50%);
+
+  background:
+    radial-gradient(
+      ellipse at center,
+      rgba(80, 100, 130, 0.09) 0%,
+      rgba(40, 50, 65, 0.045) 35%,
+      transparent 70%
+    );
+
+  filter: blur(20px);
+  pointer-events: none;
+}
+
+
+/* Fine horizontal atmosphere. */
+
+#technical-skills::after {
+  content: "";
+  position: absolute;
+  z-index: -3;
+
+  width: 100%;
+  height: 1px;
+
+  left: 0;
+  top: 53%;
+
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.035),
+    transparent
+  );
+
+  pointer-events: none;
+}
+
+
+/* ---------------------------------------------------------
+   HEADING
+   --------------------------------------------------------- */
+
 #tech-skills-heading {
-  text-align: center;
+  position: relative;
   z-index: 10;
+
+  width: min(900px, 100%);
+
+  text-align: center;
+  margin: 0 auto;
 }
 
 .section-title {
+  margin: 0 0 0.6rem;
+
   color: var(--text-primary);
-  font-size: 3.5rem;
   font-family: var(--font-display);
+  font-size: clamp(2.25rem, 5vw, 3.65rem);
   font-weight: 700;
-  margin: 0;
-  margin-bottom: 0.5rem;
-  letter-spacing: -1px;
+
+  line-height: 1.05;
+  letter-spacing: -1.5px;
+
+  text-wrap: balance;
 }
 
 .section-subtitle {
-  color: var(--text-secondary);
-  font-size: 1.25rem;
-  font-family: var(--font-main);
   margin: 0;
-  letter-spacing: 0.5px;
+
+  color: var(--text-secondary);
+  font-family: var(--font-main);
+  font-size: clamp(0.95rem, 2vw, 1.15rem);
+
+  line-height: 1.5;
+  letter-spacing: 0.35px;
 }
 
+
+/* ---------------------------------------------------------
+   KEYBOARD WRAPPER
+   --------------------------------------------------------- */
+
 #keyboard-wrapper {
+  --kb-unit: 64px;
+
   position: relative;
-  perspective: 2000px;
-  margin-top: 5rem;
-  margin-bottom: 5rem;
+
+  width: min(96vw, 1500px);
+  max-width: 1500px;
+
+  margin: 0 auto;
+
+  padding: 1.5rem 1rem 4.5rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  perspective: 1800px;
+  perspective-origin: 50% 40%;
+
+  overflow: visible;
 }
+
+
+/* Soft shadow underneath the entire keyboard. */
 
 .keyboard-shadow {
   position: absolute;
-  top: 6rem;
-  right: -2rem;
-  bottom: -6rem;
-  left: 2rem;
-  border-radius: 2rem;
-  background-color: #000;
+  z-index: -1;
+
+  left: 4%;
+  right: 4%;
+  top: 22%;
+  bottom: 3%;
+
+  border-radius: 50%;
+
+  background: #000;
+
+  opacity: 0.8;
+  filter: blur(34px);
+
+  transform:
+    translateY(24px)
+    scaleX(0.94);
+
   pointer-events: none;
 }
+
+
+/* ---------------------------------------------------------
+   KEYBOARD BODY
+   --------------------------------------------------------- */
 
 .keyboard-body {
   position: relative;
+
+  width: max-content;
+  max-width: 100%;
+
   transform-style: preserve-3d;
-  transform: scale(1) rotateX(12deg) rotateY(0deg) rotateZ(0deg);
-  pointer-events: none;
+  transform:
+    perspective(1800px)
+    rotateX(15deg)
+    rotateY(-1deg);
+
+  transform-origin: center top;
+
+  transition: transform 0.25s ease;
+
+  pointer-events: auto;
 }
+
+
+/* Main keyboard shell. */
 
 .keyboard-inner {
   position: relative;
-  padding: 4rem;
-  border-radius: 2rem;
-  background: #101216;
+
+  width: max-content;
+  max-width: 100%;
+
+  margin: 0 auto;
+
+  padding: calc(var(--kb-unit) * 0.38);
+
+  border-radius: clamp(1rem, 2.2vw, 1.8rem);
+
+  background:
+    linear-gradient(
+      145deg,
+      #15181d 0%,
+      #101318 42%,
+      #0c0f13 100%
+    );
+
+  border: max(2px, calc(var(--kb-unit) * 0.035)) solid #2c323b;
+
+  border-bottom-color: #080a0d;
+
   box-shadow:
-    0 60px 0 #0a0b0e,
-    0 64px 0 #000000;
-  border: 4px solid #2f343d;
-  border-bottom: 4px solid #0a0b0e;
+    0 calc(var(--kb-unit) * 0.16) 0 #080a0d,
+    0 calc(var(--kb-unit) * 0.28) 0 #030405,
+    0 calc(var(--kb-unit) * 0.48)
+      calc(var(--kb-unit) * 0.45)
+      rgba(0, 0, 0, 0.45);
+
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+
+  gap: calc(var(--kb-unit) * 0.10);
+
   transform-style: preserve-3d;
-  pointer-events: none;
+
+  overflow: hidden;
+
+  pointer-events: auto;
 }
+
+
+/* Top rim. */
 
 .edge-highlight-top {
   position: absolute;
+
+  z-index: 5;
+
   top: 0;
-  right: 0;
-  left: 0;
-  height: 4px;
-  background: #313742;
-  border-top-left-radius: 2rem;
-  border-top-right-radius: 2rem;
+  left: 3%;
+  right: 3%;
+
+  height: 3px;
+
+  background: linear-gradient(
+    90deg,
+    transparent,
+    #3b424d 18%,
+    #4a515d 50%,
+    #3b424d 82%,
+    transparent
+  );
+
+  opacity: 0.9;
+
+  border-radius: 999px;
+
+  pointer-events: none;
 }
 
+
+/* Decorative lower edge.
+   Your JS creates this element. */
+
+.edge-shadow-bottom {
+  position: absolute;
+
+  z-index: 1;
+
+  left: 4%;
+  right: 4%;
+  bottom: 0;
+
+  height: calc(var(--kb-unit) * 0.18);
+
+  background: linear-gradient(
+    180deg,
+    transparent,
+    rgba(0, 0, 0, 0.45)
+  );
+
+  border-radius: 0 0 1rem 1rem;
+
+  pointer-events: none;
+}
+
+
+/* ---------------------------------------------------------
+   ROWS
+   --------------------------------------------------------- */
+
 .keyboard-rows {
+  position: relative;
+  z-index: 2;
+
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-  pointer-events: none;
+
+  gap: calc(var(--kb-unit) * 0.10);
+
+  pointer-events: auto;
 }
 
 .keyboard-row {
   display: flex;
   justify-content: center;
-  gap: 1rem;
-  pointer-events: none;
-}
+  align-items: stretch;
 
-.key-container {
-  position: relative;
-  width: var(--key-width);
-  height: 7rem;
-  cursor: pointer;
-  transform-style: preserve-3d;
+  gap: calc(var(--kb-unit) * 0.10);
+
   pointer-events: auto;
 }
 
+
+/* ---------------------------------------------------------
+   KEY CONTAINER
+   --------------------------------------------------------- */
+
+.key-container {
+  position: relative;
+
+  width: calc(var(--kb-unit) * var(--kw, 1));
+  height: var(--kb-unit);
+
+  flex: 0 0 auto;
+
+  border-radius: calc(var(--kb-unit) * 0.135);
+
+  cursor: pointer;
+
+  transform-style: preserve-3d;
+
+  pointer-events: auto;
+
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+.key-container:focus-visible {
+  outline: none;
+}
+
+.key-container:focus-visible::after {
+  content: "";
+
+  position: absolute;
+  inset: -3px;
+
+  border: 2px solid var(--hover-color, #ffffff);
+
+  border-radius: inherit;
+
+  opacity: 0.9;
+
+  box-shadow:
+    0 0 0 3px rgba(255, 255, 255, 0.04),
+    0 0 16px color-mix(
+      in srgb,
+      var(--hover-color, #ffffff) 35%,
+      transparent
+    );
+
+  pointer-events: none;
+}
+
+
+/* ---------------------------------------------------------
+   KEY SHADOW / MECHANICAL DEPTH
+   --------------------------------------------------------- */
+
 .key-shadow-base {
   position: absolute;
-  top: 1rem;
+
+  z-index: 0;
+
+  top: 8%;
   left: 0;
   right: 0;
-  bottom: -1rem;
-  background-color: #090a0c;
-  border-radius: 1rem;
+  bottom: -15%;
+
+  border-radius: inherit;
+
+  background:
+    linear-gradient(
+      180deg,
+      #0b0d10 0%,
+      #07080a 100%
+    );
+
+  box-shadow:
+    0 5px 8px rgba(0, 0, 0, 0.42);
+
+  transform: translateZ(-2px);
+
+  pointer-events: none;
 }
+
+
+/* ---------------------------------------------------------
+   KEY BODY
+   --------------------------------------------------------- */
 
 .key-body {
   position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  background: #1b1e23;
-  border: 4px solid #2f343d;
-  border-bottom: 4px solid #131519;
-  border-radius: 1rem;
-  transform: translateY(0);
+
+  z-index: 2;
+
+  inset: 0;
+
+  display: block;
+
+  border-radius: inherit;
+
+  background:
+    linear-gradient(
+      145deg,
+      #20242b 0%,
+      #1a1e24 48%,
+      #16191e 100%
+    );
+
+  border:
+    max(2px, calc(var(--kb-unit) * 0.032))
+    solid #303640;
+
+  border-bottom:
+    max(2px, calc(var(--kb-unit) * 0.045))
+    solid #111419;
+
+  box-shadow:
+    0 3px 0 #0d1014,
+    0 6px 10px rgba(0, 0, 0, 0.28);
+
+  transform:
+    translate3d(0, 0, 0);
+
   transition:
-    transform 0.1s cubic-bezier(0.4, 0, 0.2, 1),
-    background-color 0.2s,
-    border-color 0.2s;
-  pointer-events: none;
+    transform 120ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    background 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease;
+
   overflow: hidden;
+
+  pointer-events: none;
 }
 
-.key-container:hover .key-body {
-  transform: translateY(0.1rem);
-  background: #252930;
-  border-color: var(--hover-color, #ffffff);
+
+/* Subtle top bevel. */
+
+.key-body::before {
+  content: "";
+
+  position: absolute;
+
+  z-index: 5;
+
+  top: 0;
+  left: 4%;
+  right: 4%;
+
+  height: 2px;
+
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.16),
+    transparent
+  );
+
+  opacity: 0.8;
+
+  pointer-events: none;
 }
 
-.key-container:active .key-body,
-.key-container.active-press .key-body {
-  transform: translateY(1rem);
-  background: #252930;
-  border-color: var(--hover-color, #ffffff);
-  transition: transform 0.05s;
+
+/* Inner surface highlight. */
+
+.key-body::after {
+  content: "";
+
+  position: absolute;
+
+  z-index: 5;
+
+  inset: 1px;
+
+  border-radius: inherit;
+
+  border: 1px solid rgba(255, 255, 255, 0.025);
+
+  pointer-events: none;
 }
+
+
+/* ---------------------------------------------------------
+   DECORATIVE KEY LAYERS
+   --------------------------------------------------------- */
+
+.key-top-highlight,
+.key-side-highlight,
+.key-hover-glow,
+.key-bottom-glow {
+  position: absolute;
+
+  pointer-events: none;
+}
+
+
+/* Compatibility with the JS-created decorative layer. */
+
+.key-top-highlight {
+  z-index: 4;
+
+  top: 0;
+  left: 8%;
+  right: 8%;
+
+  height: 2px;
+
+  border-radius: 999px;
+
+  background: rgba(255, 255, 255, 0.12);
+
+  opacity: 0.55;
+}
+
+
+/* Right-side bevel. */
+
+.key-side-highlight {
+  z-index: 4;
+
+  top: 8%;
+  right: 0;
+
+  width: 1px;
+  height: 76%;
+
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.08),
+    transparent
+  );
+
+  opacity: 0.45;
+}
+
+
+/* Hidden until hover. */
+
+.key-hover-glow {
+  z-index: 3;
+
+  inset: -25%;
+
+  background: radial-gradient(
+    circle,
+    color-mix(
+      in srgb,
+      var(--hover-color, #ffffff) 22%,
+      transparent
+    ) 0%,
+    transparent 62%
+  );
+
+  opacity: 0;
+
+  filter: blur(9px);
+
+  transition:
+    opacity 220ms ease;
+
+  pointer-events: none;
+}
+
+
+/* Bottom ambient reflection. */
+
+.key-bottom-glow {
+  z-index: 3;
+
+  left: 10%;
+  right: 10%;
+  bottom: 0;
+
+  height: 22%;
+
+  background: linear-gradient(
+    180deg,
+    transparent,
+    color-mix(
+      in srgb,
+      var(--hover-color, #ffffff) 8%,
+      transparent
+    )
+  );
+
+  opacity: 0;
+
+  transition:
+    opacity 220ms ease;
+
+  pointer-events: none;
+}
+
+
+/* ---------------------------------------------------------
+   KEY CONTENT
+   --------------------------------------------------------- */
 
 .key-content {
   position: relative;
+  z-index: 6;
+
+  width: 100%;
   height: 100%;
+
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 10%;
+
   box-sizing: border-box;
+
+  padding: 9%;
+
+  overflow: visible;
+
+  pointer-events: none;
 }
 
-.key-content img,
-.key-content i,
-.key-content svg {
-  width: 60%;
-  height: 60%;
+
+/* External image logos. */
+
+.key-content img {
+  display: block;
+
+  width: 52%;
+  height: 52%;
+
   object-fit: contain;
-  transition: all 0.3s ease;
-  display: flex !important;
+
+  transform:
+    translate3d(0, 0, 0)
+    scale(1);
+
+  transform-origin: center;
+
+  filter:
+    drop-shadow(
+      0 2px 3px rgba(0, 0, 0, 0.35)
+    );
+
+  transition:
+    width 220ms ease,
+    height 220ms ease,
+    transform 220ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    filter 220ms ease;
+
+  pointer-events: none;
+}
+
+
+/* Icon fonts. */
+
+.key-content i {
+  display: flex;
+
+  width: 52%;
+  height: 52%;
+
   align-items: center;
   justify-content: center;
-  font-size: 3.6rem !important; /* For devicons font size (1.8 * 2) */
+
+  color: #ffffff;
+
+  font-size: calc(var(--kb-unit) * 0.48) !important;
+
+  transform:
+    translate3d(0, 0, 0)
+    scale(1);
+
+  filter:
+    drop-shadow(
+      0 2px 3px rgba(0, 0, 0, 0.35)
+    );
+
+  transition:
+    width 220ms ease,
+    height 220ms ease,
+    transform 220ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    color 180ms ease,
+    filter 220ms ease;
+
+  pointer-events: none;
 }
 
-/* Explicitly fix SVG display to preserve internal path rendering */
+
+/* Inline SVGs. */
+
 .key-content svg {
-  display: block !important;
+  display: block;
+
+  width: 52%;
+  height: 52%;
+
+  object-fit: contain;
+
+  transform:
+    translate3d(0, 0, 0)
+    scale(1);
+
+  transform-origin: center;
+
+  filter:
+    drop-shadow(
+      0 2px 3px rgba(0, 0, 0, 0.35)
+    );
+
+  transition:
+    width 220ms ease,
+    height 220ms ease,
+    transform 220ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    filter 220ms ease;
+
+  pointer-events: none;
 }
+
+
+/*
+   IMPORTANT:
+   Do NOT globally force SVG paths to white.
+
+   Your original CSS did this:
+
+   .key-content svg path {
+     fill: #ffffff;
+   }
+
+   That destroys multicolor logos.
+
+   We intentionally leave SVG internal colors untouched.
+*/
+
+
+/* ---------------------------------------------------------
+   TEXT KEYS
+   --------------------------------------------------------- */
+
+.key-text {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  height: 100%;
+
+  color: var(--key-text);
+
+  font-family: var(--font-main, sans-serif);
+  font-size: calc(var(--kb-unit) * 0.235);
+  font-weight: 600;
+
+  letter-spacing: -0.2px;
+
+  user-select: none;
+
+  text-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.6);
+
+  pointer-events: none;
+}
+
+
+/* ---------------------------------------------------------
+   TECHNOLOGY NAME
+   --------------------------------------------------------- */
+
+/*
+   Instead of squeezing the name inside the key,
+   we make it a floating label above the key.
+
+   This keeps the logo large and makes the interaction
+   much easier to read.
+*/
 
 .tech-name {
   position: absolute;
-  bottom: 8%;
-  font-size: 1.3rem; /* 0.65 * 2 */
-  font-family: sans-serif;
+
+  z-index: 20;
+
+  left: 50%;
+  bottom: calc(100% + 10px);
+
+  transform:
+    translate(-50%, 5px)
+    scale(0.96);
+
+  min-width: max-content;
+  max-width: 180px;
+
+  padding: 5px 9px;
+
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  border-radius: 7px;
+
+  background:
+    rgba(12, 14, 18, 0.94);
+
+  box-shadow:
+    0 8px 24px rgba(0, 0, 0, 0.45),
+    0 0 0 1px rgba(255, 255, 255, 0.025);
+
   color: #ffffff;
+
+  font-family: var(--font-main, sans-serif);
+  font-size: max(10px, calc(var(--kb-unit) * 0.16));
+  font-weight: 600;
+
+  line-height: 1.2;
+
+  letter-spacing: 0.1px;
+
+  text-align: center;
+
   opacity: 0;
-  transform: translateY(10px); /* 5px * 2 */
-  transition: all 0.3s ease;
-  pointer-events: none;
-  font-weight: bold;
+
   white-space: nowrap;
+
+  pointer-events: none;
+
+  transition:
+    opacity 160ms ease,
+    transform 160ms cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
-.key-container:hover .tech-name {
-  opacity: 1;
-  transform: translateY(0);
-  color: #ffffff;
+
+/* Small tooltip pointer. */
+
+.tech-name::after {
+  content: "";
+
+  position: absolute;
+
+  left: 50%;
+  bottom: -5px;
+
+  width: 8px;
+  height: 8px;
+
+  transform:
+    translateX(-50%)
+    rotate(45deg);
+
+  background: #0c0e12;
+
+  border-right: 1px solid rgba(255, 255, 255, 0.10);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.10);
 }
+
+
+/* ---------------------------------------------------------
+   HOVER
+   --------------------------------------------------------- */
+
+.key-container:hover .key-body {
+  background:
+    linear-gradient(
+      145deg,
+      #252a32 0%,
+      #20252c 48%,
+      #1b1f25 100%
+    );
+
+  border-color:
+    color-mix(
+      in srgb,
+      var(--hover-color, #ffffff) 65%,
+      #303640
+    );
+
+  box-shadow:
+    0 3px 0 #0d1014,
+    0 7px 14px rgba(0, 0, 0, 0.34),
+    0 0 18px color-mix(
+      in srgb,
+      var(--hover-color, #ffffff) 18%,
+      transparent
+    );
+
+  transform:
+    translate3d(0, -2px, 2px);
+}
+
+
+.key-container:hover .key-hover-glow,
+.key-container:hover .key-bottom-glow {
+  opacity: 1;
+}
+
 
 .key-container:hover .key-content img,
-.key-container:hover .key-content i,
 .key-container:hover .key-content svg {
-  height: 45%;
   width: 45%;
-  transform: translateY(-20%);
-  font-size: 2.8rem !important; /* 1.4 * 2 */
+  height: 45%;
+
+  transform:
+    translate3d(0, -4%, 5px)
+    scale(1.04);
+
+  filter:
+    drop-shadow(
+      0 3px 5px rgba(0, 0, 0, 0.38)
+    )
+    drop-shadow(
+      0 0 8px color-mix(
+        in srgb,
+        var(--hover-color, #ffffff) 24%,
+        transparent
+      )
+    );
 }
 
-.key-text {
-  font-size: 1.7rem; /* 0.85 * 2 */
-  user-select: none;
-  color: #ffffff;
-  font-family: sans-serif;
-  font-weight: 600;
+
+.key-container:hover .key-content i {
+  width: 45%;
+  height: 45%;
+
+  font-size: calc(var(--kb-unit) * 0.42) !important;
+
+  transform:
+    translate3d(0, -4%, 5px)
+    scale(1.04);
+
+  color:
+    var(--hover-color, #ffffff);
+
+  filter:
+    drop-shadow(
+      0 3px 5px rgba(0, 0, 0, 0.38)
+    )
+    drop-shadow(
+      0 0 8px color-mix(
+        in srgb,
+        var(--hover-color, #ffffff) 28%,
+        transparent
+      )
+    );
 }
 
-.key-content i,
-.key-content svg,
-.key-content svg path {
-  color: #ffffff;
-  fill: #ffffff;
+
+.key-container:hover .tech-name,
+.key-container:focus-visible .tech-name {
+  opacity: 1;
+
+  transform:
+    translate(-50%, 0)
+    scale(1);
+}
+
+
+/* ---------------------------------------------------------
+   PRESS / CLICK STATE
+   --------------------------------------------------------- */
+
+.key-container:active .key-body,
+.key-container.active-press .key-body {
+  background:
+    linear-gradient(
+      145deg,
+      #1b1f25 0%,
+      #181b20 100%
+    );
+
+  border-color:
+    color-mix(
+      in srgb,
+      var(--hover-color, #ffffff) 72%,
+      #303640
+    );
+
+  transform:
+    translate3d(0, 5px, 0);
+
+  box-shadow:
+    0 1px 0 #0b0d10,
+    0 2px 4px rgba(0, 0, 0, 0.35);
+
   transition:
-    color 0.1s ease,
-    fill 0.1s ease;
+    transform 45ms ease,
+    background 80ms ease,
+    border-color 80ms ease,
+    box-shadow 45ms ease;
 }
 
-.key-container:hover .key-content i,
-.key-container:hover .key-content svg,
-.key-container:hover .key-content svg path {
-  color: var(--hover-color, #ffffff) !important;
-  fill: var(--hover-color, #ffffff) !important;
+
+.key-container:active .key-content img,
+.key-container.active-press .key-content img,
+.key-container:active .key-content svg,
+.key-container.active-press .key-content svg {
+  transform:
+    translate3d(0, 2px, 0)
+    scale(0.98);
+}
+
+
+.key-container:active .key-content i,
+.key-container.active-press .key-content i {
+  transform:
+    translate3d(0, 2px, 0)
+    scale(0.98);
+}
+
+
+/* ---------------------------------------------------------
+   SPECIAL WIDE KEYS
+   --------------------------------------------------------- */
+
+.key-container[style*="--kw: 7.5"] .key-text {
+  font-size: calc(var(--kb-unit) * 0.22);
+  letter-spacing: 0.3px;
+}
+
+
+/* ---------------------------------------------------------
+   COLOR / LOGO HANDLING
+   --------------------------------------------------------- */
+
+/*
+   Preserve the original Devicon colors.
+
+   The old CSS used invert() on several logos.
+   This version intentionally avoids that because it makes
+   the logo colors inconsistent with the hover color.
+
+   If one specific logo is genuinely invisible because its
+   source SVG is black, fix only that logo with a class or
+   a specific selector rather than globally inverting logos.
+*/
+
+
+/* ---------------------------------------------------------
+   RESPONSIVE — LARGE TABLETS / LAPTOPS
+   --------------------------------------------------------- */
+
+@media (max-width: 1200px) {
+  #technical-skills {
+    padding-top: 6rem;
+    padding-bottom: 7rem;
+  }
+
+  #keyboard-wrapper {
+    width: 98vw;
+  }
+
+  .keyboard-body {
+    transform:
+      perspective(1500px)
+      rotateX(13deg)
+      rotateY(-1deg);
+  }
+}
+
+
+/* ---------------------------------------------------------
+   RESPONSIVE — TABLET
+   --------------------------------------------------------- */
+
+@media (max-width: 900px) {
+  #technical-skills {
+    gap: 2rem;
+    padding: 5rem 0.5rem 6rem;
+  }
+
+  .section-title {
+    font-size: clamp(2rem, 7vw, 3rem);
+  }
+
+  .section-subtitle {
+    font-size: 1rem;
+  }
+
+  #keyboard-wrapper {
+    padding:
+      1rem 0.25rem
+      3.5rem;
+  }
+
+  .keyboard-body {
+    transform:
+      perspective(1300px)
+      rotateX(10deg);
+  }
+}
+
+
+/* ---------------------------------------------------------
+   RESPONSIVE — MOBILE
+   --------------------------------------------------------- */
+
+@media (max-width: 640px) {
+  #technical-skills {
+    min-height: auto;
+
+    gap: 1.75rem;
+
+    padding:
+      4rem 0.25rem
+      5rem;
+  }
+
+  #tech-skills-heading {
+    padding-inline: 0.75rem;
+  }
+
+  .section-title {
+    margin-bottom: 0.5rem;
+
+    font-size:
+      clamp(1.9rem, 10vw, 2.6rem);
+
+    letter-spacing: -1px;
+  }
+
+  .section-subtitle {
+    font-size: 0.92rem;
+    line-height: 1.45;
+  }
+
+  #keyboard-wrapper {
+    width: 100%;
+
+    padding:
+      0.75rem 0
+      3rem;
+
+    perspective: 1100px;
+  }
+
+  .keyboard-body {
+    transform:
+      perspective(1100px)
+      rotateX(7deg);
+  }
+
+  .keyboard-inner {
+    border-radius: 1rem;
+
+    padding:
+      calc(var(--kb-unit) * 0.30);
+
+    gap:
+      calc(var(--kb-unit) * 0.08);
+  }
+
+  .keyboard-rows,
+  .keyboard-row {
+    gap:
+      calc(var(--kb-unit) * 0.08);
+  }
+
+  .key-text {
+    font-size:
+      calc(var(--kb-unit) * 0.22);
+  }
+
+  .tech-name {
+    font-size:
+      max(9px, calc(var(--kb-unit) * 0.17));
+
+    padding:
+      4px 7px;
+  }
+}
+
+
+/* ---------------------------------------------------------
+   VERY SMALL PHONES
+   --------------------------------------------------------- */
+
+@media (max-width: 400px) {
+  #technical-skills {
+    padding-inline: 0;
+  }
+
+  #keyboard-wrapper {
+    overflow-x: auto;
+    overflow-y: visible;
+
+    justify-content: flex-start;
+
+    padding-inline:
+      max(0.5rem, env(safe-area-inset-left));
+
+    padding-right:
+      max(0.5rem, env(safe-area-inset-right));
+
+    scrollbar-width: none;
+  }
+
+  #keyboard-wrapper::-webkit-scrollbar {
+    display: none;
+  }
+
+  .keyboard-body {
+    flex: 0 0 auto;
+  }
+
+  .keyboard-inner {
+    transform-origin: center top;
+  }
+
+  .tech-name {
+    font-size: 9px;
+  }
+}
+
+
+/* ---------------------------------------------------------
+   REDUCED MOTION
+   --------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  #technical-skills *,
+  #technical-skills *::before,
+  #technical-skills *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .keyboard-body {
+    transform: none;
+  }
+
+  .key-body {
+    transform: none;
+  }
+}
+
+
+/* ---------------------------------------------------------
+   TOUCH DEVICES
+   --------------------------------------------------------- */
+
+@media (hover: none) and (pointer: coarse) {
+  .key-container:hover .key-body {
+    transform: none;
+
+    box-shadow:
+      0 3px 0 #0d1014,
+      0 6px 10px rgba(0, 0, 0, 0.28);
+  }
+
+  .key-container:hover .key-content img,
+  .key-container:hover .key-content svg,
+  .key-container:hover .key-content i {
+    width: 52%;
+    height: 52%;
+
+    transform: none;
+
+    filter:
+      drop-shadow(
+        0 2px 3px rgba(0, 0, 0, 0.35)
+      );
+  }
+
+  .key-container:hover .tech-name {
+    opacity: 0;
+  }
+
+  .key-container:active .tech-name,
+  .key-container.active-press .tech-name {
+    opacity: 1;
+  }
+}
+
+
+/* ---------------------------------------------------------
+   HIGH CONTRAST
+   --------------------------------------------------------- */
+
+@media (prefers-contrast: more) {
+  .keyboard-inner {
+    border-color: #59616d;
+  }
+
+  .key-body {
+    border-color: #59616d;
+  }
+
+  .section-subtitle {
+    color: #c7ccd4;
+  }
+
+  .tech-name {
+    border-color: #727a86;
+  }
 }

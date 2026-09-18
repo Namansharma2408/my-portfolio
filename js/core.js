@@ -26,9 +26,9 @@ function createCurve(id, startX, startY, segments) {
     "http://www.w3.org/2000/svg",
     "circle",
   )
-  circle.setAttribute("r", "10")
+  circle.setAttribute("r", "20")
   circle.setAttribute("fill", "white")
-  circle.setAttribute("opacity", "0.5")
+  circle.setAttribute("opacity", "0.1")
 
   const animate = document.createElementNS(
     "http://www.w3.org/2000/svg",
@@ -36,9 +36,9 @@ function createCurve(id, startX, startY, segments) {
   )
   let time = Math.random()
   if (time < 0.5) time = 1 - time
-  animate.setAttribute("dur", time * 5)
+  animate.setAttribute("dur", time*5)
   animate.setAttribute("repeatCount", "indefinite")
-  animate.setAttribute("begin", `${Math.random() * 5}s`)
+  animate.setAttribute("begin", `${Math.random() * 50}s`)
 
   const mpath = document.createElementNS("http://www.w3.org/2000/svg", "mpath")
   mpath.setAttribute("href", `#${id}`)

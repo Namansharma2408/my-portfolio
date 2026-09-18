@@ -3,7 +3,25 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>My Website</title>
+    <title>Naman Sharma | Full Stack & AI Developer</title>
+    <meta
+      name="description"
+      content="Portfolio of Naman Sharma, Computer Science undergrad at IIT Bhilai specializing in full-stack web, Android, and AI-driven systems."
+    />
+    <meta name="theme-color" content="#050505" />
+    <link rel="icon" type="image/png" href="public/server.png" />
+    <meta
+      property="og:title"
+      content="Naman Sharma | Full Stack & AI Developer"
+    />
+    <meta
+      property="og:description"
+      content="High-performance web architectures, microservices, and multi-agent RAG systems."
+    />
+    <meta property="og:type" content="website" />
+    <link rel="preconnect" href="https://res.cloudinary.com" />
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+    <link rel="preconnect" href="https://images.unsplash.com" />
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -30,212 +48,489 @@
       href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css"
       rel="stylesheet"
     />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-    />
   </head>
   <body>
-    <div class="animation">
-      <svg id="canvas"></svg>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <div class="animation" aria-hidden="true">
+      <svg id="canvas" role="presentation"></svg>
       <div class="glass-overlay"></div>
     </div>
     <!-- <div class="grid-container"></div> -->
-    <div id="top-nav-container">
-      <ul id="top-nav-items">
-        <li class="top-nav-item">Home</li>
-        <li class="top-nav-item">About</li>
-        <li class="top-nav-item">Skills</li>
-        <li class="top-nav-item">Projects</li>
-        <li class="top-nav-item">Contact</li>
-      </ul>
-    </div>
+    <header id="top-nav-container">
+      <nav aria-label="Primary">
+        <ul id="top-nav-items">
+          <li><a href="#home" class="top-nav-item">Home</a></li>
+          <li><a href="#about-us" class="top-nav-item">About</a></li>
+          <li><a href="#technical-skills" class="top-nav-item">Skills</a></li>
+          <li><a href="#projects" class="top-nav-item">Projects</a></li>
+          <li><a href="#contact" class="top-nav-item">Contact</a></li>
+        </ul>
+      </nav>
+    </header>
 
     <!-- Hidden by default, shown securely on scroll or explicitly on mobile -->
-    <div id="side-nav-trigger">
-      <i class="ri-menu-2-line"></i>
-    </div>
-    <nav id="full">
-      <i class="ri-close-line close-btn"></i>
+    <button
+      id="side-nav-trigger"
+      aria-label="Open menu"
+      aria-expanded="false"
+      aria-controls="full"
+    >
+      <i class="ri-menu-2-line" aria-hidden="true"></i>
+    </button>
+    <nav id="full" aria-label="Side navigation">
+      <button class="close-btn" aria-label="Close menu">
+        <i class="ri-close-line" aria-hidden="true"></i>
+      </button>
       <ul class="side-nav-list">
         <li class="side-nav-item"><a href="#home">Home</a></li>
-        <li class="side-nav-item"><a href="#about">About</a></li>
-        <li class="side-nav-item"><a href="#skills">Skills</a></li>
+        <li class="side-nav-item"><a href="#about-us">About</a></li>
+        <li class="side-nav-item"><a href="#technical-skills">Skills</a></li>
         <li class="side-nav-item"><a href="#projects">Projects</a></li>
         <li class="side-nav-item"><a href="#contact">Contact</a></li>
       </ul>
     </nav>
-    <div id="name-container">
-      <img src="public/server.png" alt="server" class="server-img" />
-      <p id="name">
-        Naman<br />
-        Sharma
-      </p>
-    </div>
-    <div id="description">
-      <p class="description-text">Full Stack Web Developer</p>
-      <span class="description-text">|</span>
-      <p class="description-text">Android Developer</p>
-      <span class="description-text">|</span>
-      <p class="description-text">AI Developer</p>
-    </div>
-    <div id="about-us">
-      <div id="cloud-background-container">
-        <video
-          autoplay
-          muted
-          loop
-          playsinline
-          src="https://res.cloudinary.com/dk6nbaps1/video/upload/v1776882872/video_klm52z.mp4"
-          id="cloud-background"
-        ></video>
-      </div>
-
-      <div class="about-container">
-        <!-- Header Section -->
-        <div class="about-header">
-          <div class="about-title">
-            <h2 class="text-white">About</h2>
-            <h2 class="text-accent">Naman Sharma</h2>
-          </div>
-          <div class="about-bio">
-            <p>
-              I am a Computer Science undergrad at IIT Bhilai and a passionate
-              Software Developer. I specialize in building high-performance,
-              scalable web architectures and AI-driven systems. I thrive on
-              engineering Multi-Agent RAG pipelines and distributed
-              microservices.
-            </p>
-          </div>
+    <main id="main-content">
+      <section id="home" aria-label="Introduction">
+        <div id="name-container">
+          <h1 id="name">
+            Naman<br />
+            Sharma
+          </h1>
         </div>
-
-        <!-- Expertise Section -->
-        <div class="about-expertise">
-          <h3>Core Expertise <span class="text-accent">Focus Areas</span></h3>
-          <div class="expertise-pills-wrapper">
-            <div class="expertise-pills">
-              <!-- Set 1 -->
-              <span class="pill">Next.js</span>
-              <span class="pill">FastAPI</span>
-              <span class="pill">Docker</span>
-              <span class="pill">RAG Pipelines</span>
-              <span class="pill">Distributed Systems</span>
-              <span class="pill">Algorithms</span>
-              <span class="pill">Microservices</span>
-              <span class="pill">PostgreSQL</span>
-              <!-- Set 2 for seamless loop -->
-              <span class="pill">Next.js</span>
-              <span class="pill">FastAPI</span>
-              <span class="pill">Docker</span>
-              <span class="pill">RAG Pipelines</span>
-              <span class="pill">Distributed Systems</span>
-              <span class="pill">Algorithms</span>
-              <span class="pill">Microservices</span>
-              <span class="pill">PostgreSQL</span>
-            </div>
-          </div>
+        <div id="description" aria-label="Roles">
+          <span class="description-text">Full Stack Web Developer</span>
+          <span
+            class="description-text description-separator"
+            aria-hidden="true"
+            >|</span
+          >
+          <span class="description-text">Android Developer</span>
+          <span
+            class="description-text description-separator"
+            aria-hidden="true"
+            >|</span
+          >
+          <span class="description-text">AI Developer</span>
         </div>
+      </section>
+      <!-- =========================================================
+     ABOUT SECTION
+========================================================= -->
 
-        <!-- Media Grid Section -->
-        <div class="about-grid">
-          <div class="grid-left">
-            <img
-              src="https://res.cloudinary.com/dk6nbaps1/image/upload/v1776882982/mine_swknwl.png"
-              alt="Workspace"
+      <section id="about-us" aria-labelledby="about-title">
+        <!-- Background video -->
+        <div id="cloud-background-container" aria-hidden="true">
+          <video
+            id="cloud-background"
+            autoplay
+            muted
+            loop
+            playsinline
+            preload="metadata"
+            poster="public/mine.png"
+          >
+            <source
+              src="https://res.cloudinary.com/dk6nbaps1/video/upload/v1776882872/video_klm52z.mp4"
+              type="video/mp4"
             />
-          </div>
-          <div class="grid-right">
-            <div class="grid-top">
+          </video>
+        </div>
+
+        <!-- Dark / glass overlay -->
+        <div class="about-background-overlay" aria-hidden="true"></div>
+
+        <div class="about-container">
+          <!-- =====================================================
+         HEADER
+    ====================================================== -->
+
+          <header class="about-header about-reveal">
+            <div class="about-title">
+              <span class="about-eyebrow"> ABOUT ME </span>
+
+              <h2 id="about-title" class="about-title-white">Naman</h2>
+
+              <h2 class="about-title-accent">Sharma</h2>
+            </div>
+
+            <div class="about-bio">
+              <p>
+                I'm a Computer Science undergraduate at IIT Bhilai focused on
+                building scalable software systems. I work across full-stack
+                development, backend architecture, distributed systems, and
+                AI-powered applications, with a particular interest in
+                algorithms, performance, and systems engineering.
+              </p>
+
+              <div class="about-meta">
+                <span>
+                  <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
+
+                  IIT Bhilai
+                </span>
+
+                <span>
+                  <i class="fa-solid fa-code" aria-hidden="true"></i>
+
+                  Software Developer
+                </span>
+
+                <span>
+                  <i class="fa-solid fa-terminal" aria-hidden="true"></i>
+
+                  Systems &amp; Algorithms
+                </span>
+              </div>
+            </div>
+          </header>
+
+          <!-- =====================================================
+         EXPERTISE
+    ====================================================== -->
+
+          <section
+            class="about-expertise about-reveal"
+            aria-labelledby="expertise-title"
+          >
+            <div class="expertise-heading">
+              <span class="expertise-label"> WHAT I WORK WITH </span>
+
+              <h3 id="expertise-title">
+                Core Expertise
+                <span>Focus Areas</span>
+              </h3>
+            </div>
+
+            <div
+              class="expertise-pills-wrapper"
+              aria-label="Technical expertise"
+            >
+              <div class="expertise-pills">
+                <!-- FIRST SET -->
+
+                <span class="pill">C++</span>
+                <span class="pill">TypeScript</span>
+                <span class="pill">Next.js</span>
+                <span class="pill">React</span>
+                <span class="pill">FastAPI</span>
+                <span class="pill">Django</span>
+                <span class="pill">PostgreSQL</span>
+                <span class="pill">Docker</span>
+                <span class="pill">Distributed Systems</span>
+                <span class="pill">Algorithms</span>
+                <span class="pill">RAG</span>
+                <span class="pill">Microservices</span>
+
+                <!-- SECOND SET
+               Used to create seamless marquee -->
+
+                <span class="pill" aria-hidden="true"> C++ </span>
+
+                <span class="pill" aria-hidden="true"> TypeScript </span>
+
+                <span class="pill" aria-hidden="true"> Next.js </span>
+
+                <span class="pill" aria-hidden="true"> React </span>
+
+                <span class="pill" aria-hidden="true"> FastAPI </span>
+
+                <span class="pill" aria-hidden="true"> Django </span>
+
+                <span class="pill" aria-hidden="true"> PostgreSQL </span>
+
+                <span class="pill" aria-hidden="true"> Docker </span>
+
+                <span class="pill" aria-hidden="true">
+                  Distributed Systems
+                </span>
+
+                <span class="pill" aria-hidden="true"> Algorithms </span>
+
+                <span class="pill" aria-hidden="true"> RAG </span>
+
+                <span class="pill" aria-hidden="true"> Microservices </span>
+              </div>
+            </div>
+          </section>
+
+          <!-- =====================================================
+         MEDIA / STATS
+    ====================================================== -->
+
+          <div class="about-grid">
+            <!-- ===================================================
+           MAIN IMAGE
+      ==================================================== -->
+
+            <div class="grid-left about-reveal">
+              <div class="image-overlay" aria-hidden="true"></div>
+
               <img
-                src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
-                alt="Team Discussion"
+                src="https://res.cloudinary.com/dk6nbaps1/image/upload/v1789753526/mine_ca3n8t.png"
+                alt="Naman Sharma working on software development"
+                loading="lazy"
+                decoding="async"
+                width="800"
+                height="1000"
               />
+
+              <div class="image-caption">
+                <span class="caption-dot" aria-hidden="true"></span>
+
+                Building things that matter
+              </div>
             </div>
-            <div class="grid-bottom stats-box">
-              <div class="stat">
-                <h4><span class="counter" data-target="3">0</span>+</h4>
-                <p>Years Coding</p>
+
+            <!-- ===================================================
+           RIGHT COLUMN
+      ==================================================== -->
+
+            <div class="grid-right">
+              <!-- TOP IMAGE -->
+
+              <div class="grid-top about-reveal">
+                <img
+                  src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1000&q=85"
+                  alt="Developers collaborating around a table"
+                  loading="lazy"
+                  decoding="async"
+                  width="1000"
+                  height="650"
+                />
+
+                <div class="grid-top-overlay" aria-hidden="true"></div>
+
+                <div class="grid-top-label">
+                  <span>BUILD</span>
+                  <span>LEARN</span>
+                  <span>ITERATE</span>
+                </div>
               </div>
-              <div class="stat">
-                <h4><span class="counter" data-target="20">0</span>+</h4>
-                <p>Projects</p>
-              </div>
-              <div class="stat">
-                <h4><span class="counter" data-target="1000">0</span>+</h4>
-                <p>Algo Problems</p>
+
+              <!-- =================================================
+             STATS
+        ================================================== -->
+
+              <div class="grid-bottom stats-box about-reveal">
+                <div class="stat">
+                  <h4>
+                    <span class="counter" data-target="20"> 0 </span>
+
+                    <span class="stat-suffix"> + </span>
+                  </h4>
+
+                  <p>Projects</p>
+                </div>
+
+                <div class="stat-divider" aria-hidden="true"></div>
+
+                <div class="stat">
+                  <h4>
+                    <span class="counter" data-target="1000"> 0 </span>
+
+                    <span class="stat-suffix"> + </span>
+                  </h4>
+
+                  <p>DSA Problems</p>
+                </div>
+
+                <div class="stat-divider" aria-hidden="true"></div>
+
+                <div class="stat">
+                  <h4>
+                    <span class="counter" data-target="3"> 0 </span>
+
+                    <span class="stat-suffix"> + </span>
+                  </h4>
+
+                  <p>Years of Coding</p>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div id="technical-skills">
-      <div id="tech-skills-heading">
-        <h2 class="section-title">Technical Skills</h2>
-        <p class="section-subtitle">
-          Hover over the keys to explore my tech stack
-        </p>
-      </div>
-      <div id="keyboard-wrapper"></div>
-    </div>
-    <div class="projects"></div>
-    <section id="contact">
-      <div id="contact-header">
-        <span class="contact-subtitle">GET IN TOUCH</span>
-        <h2>Let's Create Something Amazing Together</h2>
-        <p>
-          Have an idea, project, opportunity, bug report, or just want to say
-          hello? My inbox is always open.
-        </p>
-      </div>
+      </section>
+      <section id="technical-skills" aria-label="Technical skills">
+        <div id="tech-skills-heading">
+          <h2 class="section-title">Technical Skills</h2>
+          <p class="section-subtitle">
+            Hover, tap, or type to explore my tech stack
+          </p>
+        </div>
+        <div id="keyboard-wrapper"></div>
+        <noscript
+          ><p class="section-subtitle">
+            Enable JavaScript to view the interactive keyboard.
+          </p></noscript
+        >
+      </section>
+      <section id="projects" class="projects-master-section">
+        <script id="project-data" type="application/json">
+          [
+            {
+              "title": "Multi-Agent RAG System",
+              "problem": "Knowledge-heavy workflows were slow and inconsistent because retrieval and generation were handled in one monolithic pipeline with weak context prioritization. As document volume grew, latency spiked, relevance dropped, and users often received fragmented answers with low traceability.",
+              "solution": "Designed a multi-agent RAG architecture with dedicated retrieval, ranking, validation, and synthesis agents coordinated through a lightweight orchestration layer. Added chunk scoring, confidence checks, and caching to reduce hallucinations, improve factual grounding, and keep response latency stable even under higher traffic.",
+              "image": "https://res.cloudinary.com/dk6nbaps1/image/upload/v1776886159/causal-ai_bfktpo.png",
+              "tech": ["Python", "FastAPI", "LangChain", "VectorDB"],
+              "bg": "linear-gradient(135deg, #020208 0%,#0a0a16 45%,#06060d 100%)"
+            },
 
-      <div id="contact-content">
-        <!-- LEFT SIDE -->
-        <div id="contact-left">
-          <img
-            src="https://res.cloudinary.com/dk6nbaps1/image/upload/v1781607412/contact_js2qu8.png"
-            alt="Contact Illustration"
-            id="contact-img"
-          />
-          <div id="call-now-tagline">📞 Call Now Or Stay Confused</div>
+            {
+              "title": "CGA – Accelerated Graph Computing Framework",
+
+              "problem": "Large-scale graph datasets are computationally expensive to process because graph workloads involve irregular memory access patterns and highly connected data structures. Sequential processing can become a major bottleneck as dataset size and workload complexity increase.",
+
+              "solution": "Engineered a high-performance C++ graph computing framework using CUDA, OpenMP, and multithreading to accelerate graph processing. Designed optimized memory access patterns and a parallel execution pipeline, with CMake-based builds and automated benchmarking to evaluate scalability, runtime performance, and correctness across different workloads.",
+
+              "image": "/assets/projects/cga.png",
+
+              "tech": [
+                "C++",
+                "CUDA",
+                "Python",
+                "OpenMP",
+                "Multithreading",
+                "CMake"
+              ],
+
+              "bg": "linear-gradient(135deg, #020407 0%, #071017 48%, #06151b 100%)"
+            },
+
+            {
+              "title": "Job Automation Agent",
+
+              "problem": "Applying to jobs across multiple platforms is repetitive and time-consuming. Candidates have to repeatedly search different job boards, evaluate opportunities, fill similar application forms, and provide the same information across different application portals.",
+
+              "solution": "Built an AI-powered job automation agent that discovers relevant opportunities across LinkedIn, Glassdoor, and Indeed, navigates application portals, fills forms, and submits applications automatically. Integrated Playwright and BeautifulSoup for browser automation and scraping, with vector retrieval, SQLite, Ollama, and a knowledge graph for context-aware candidate information and intelligent form filling.",
+
+              "image": "/assets/projects/job-automation.png",
+
+              "tech": [
+                "Django",
+                "Playwright",
+                "BeautifulSoup",
+                "Vector DB",
+                "SQLite",
+                "Ollama",
+                "Knowledge Graph"
+              ],
+
+              "bg": "linear-gradient(135deg, #050207 0%, #100713 48%, #160a19 100%)"
+            },
+
+            {
+              "title": "Brom – Personal Management App",
+
+              "problem": "Personal productivity information is often scattered across separate applications for tasks, expenses, financial records, notes, and voice memos. Switching between different tools makes it harder to keep everyday information organized and accessible.",
+
+              "solution": "Building Brom as a unified personal management application for tasks, expenses, financial statements, audio notes, and regular notes. The app uses a local-first architecture with SQLite for persistent offline storage, Zustand for application state, and a backend synchronization layer so data can remain available locally while supporting synchronization with remote services.",
+
+              "image": "/assets/projects/brom.png",
+
+              "tech": [
+                "React Native",
+                "Expo",
+                "TypeScript",
+                "SQLite",
+                "Zustand",
+                "Django",
+                "Axios"
+              ],
+
+              "bg": "linear-gradient(135deg, #020609 0%, #061217 48%, #081b20 100%)"
+            }
+          ]
+        </script>
+      </section>
+      <section id="contact">
+        <div id="contact-header">
+          <span class="contact-subtitle">GET IN TOUCH</span>
+          <h2>Let's Create Something Amazing Together</h2>
+          <p>
+            Have an idea, project, opportunity, bug report, or just want to say
+            hello? My inbox is always open.
+          </p>
         </div>
 
-        <!-- RIGHT SIDE -->
-        <div id="contact-right">
-          <div id="contact-card">
-            <h3>Let's Build Something Awesome</h3>
-            <p class="card-description">
-              Whether you have a project, startup idea, freelance opportunity,
-              or just want to connect, I'd love to hear from you.
-            </p>
-            <form id="contact-form">
-              <input type="text" placeholder="Your Name" required />
-              <input type="email" placeholder="Your Email" required />
-              <textarea
-                rows="5"
-                placeholder="Tell me about your project..."
-                required
-              ></textarea>
-              <button type="submit">Send Message</button>
-            </form>
-            <div class="social-links">
-              <a href="#" title="Github">
-                <i class="fa-brands fa-github"></i>
-              </a>
-              <a href="#" title="LinkedIn">
-                <i class="fa-brands fa-linkedin-in"></i>
-              </a>
-              <a href="#" title="Instagram">
-                <i class="fa-brands fa-instagram"></i>
-              </a>
-              <a href="#" title="Email">
-                <i class="fa-solid fa-envelope"></i>
-              </a>
+        <div id="contact-content">
+          <!-- LEFT SIDE -->
+          <div id="contact-left">
+            <img
+              src="https://res.cloudinary.com/dk6nbaps1/image/upload/v1781607412/contact_js2qu8.png"
+              alt="Illustration of contact and messaging"
+              id="contact-img"
+              loading="lazy"
+              decoding="async"
+              width="420"
+              height="420"
+            />
+            <div id="call-now-tagline">Have a project in mind? Let's talk</div>
+          </div>
+
+          <!-- RIGHT SIDE -->
+          <div id="contact-right">
+            <div id="contact-card">
+              <h3>Let's Build Something Awesome</h3>
+              <p class="card-description">
+                Whether you have a project, startup idea, freelance opportunity,
+                or just want to connect, I'd love to hear from you.
+              </p>
+              <form id="contact-form" novalidate>
+                <label class="sr-only" for="contact-name">Your Name</label>
+                <input
+                  id="contact-name"
+                  name="name"
+                  type="text"
+                  placeholder="Your Name"
+                  autocomplete="name"
+                  required
+                />
+                <label class="sr-only" for="contact-email">Your Email</label>
+                <input
+                  id="contact-email"
+                  name="email"
+                  type="email"
+                  placeholder="Your Email"
+                  autocomplete="email"
+                  required
+                />
+                <label class="sr-only" for="contact-message"
+                  >Tell me about your project</label
+                >
+                <textarea
+                  id="contact-message"
+                  name="message"
+                  rows="5"
+                  placeholder="Tell me about your project..."
+                  autocomplete="off"
+                  required
+                ></textarea>
+                <button type="submit">Send Message</button>
+                <p id="form-status" role="status" aria-live="polite"></p>
+              </form>
+              <div class="social-links">
+                <a href="#" aria-label="GitHub">
+                  <i class="fa-brands fa-github" aria-hidden="true"></i>
+                </a>
+                <a href="#" aria-label="LinkedIn">
+                  <i class="fa-brands fa-linkedin-in" aria-hidden="true"></i>
+                </a>
+                <a href="#" aria-label="Instagram">
+                  <i class="fa-brands fa-instagram" aria-hidden="true"></i>
+                </a>
+                <a href="#" aria-label="Email">
+                  <i class="fa-solid fa-envelope" aria-hidden="true"></i>
+                </a>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </main>
+    <footer id="site-footer">
+      <p>&copy; <span id="year">2026</span> Naman Sharma. Built with care.</p>
+    </footer>
     <script type="application/json" id="project-data">
       [
         {
@@ -246,36 +541,83 @@
           "tech": ["Python", "FastAPI", "LangChain", "VectorDB"],
           "bg": "linear-gradient(135deg, #020208 0%,#0a0a16 45%,#06060d 100%)"
         },
+
         {
-          "title": "Campus Microservices",
-          "problem": "Campus tools were fragmented across teams, causing duplicated data, delayed operations, and frequent manual follow-ups between departments. Critical workflows like approvals, notifications, and reporting depended on disconnected systems with inconsistent data contracts.",
-          "solution": "Built event-driven microservices for admissions, notices, and operations with asynchronous messaging, shared schemas, and resilient retry handling. Introduced centralized observability and contract validation to improve reliability, reduce turnaround time, and eliminate repetitive manual escalation cycles.",
-          "image": "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1200&q=80",
-          "tech": ["Node.js", "Docker", "RabbitMQ", "Redis"],
-          "bg": "linear-gradient(135deg, #02080b 0%,#061216 50%,#091b20 100%)"
+          "title": "CGA – Accelerated Graph Computing Framework",
+
+          "problem": "Large-scale graph datasets are computationally expensive to process because graph workloads involve irregular memory access patterns and highly connected data structures. Sequential processing can become a major bottleneck as dataset size and workload complexity increase.",
+
+          "solution": "Engineered a high-performance C++ graph computing framework using CUDA, OpenMP, and multithreading to accelerate graph processing. Designed optimized memory access patterns and a parallel execution pipeline, with CMake-based builds and automated benchmarking to evaluate scalability, runtime performance, and correctness across different workloads.",
+
+          "image": "/assets/projects/cga.png",
+
+          "tech": [
+            "C++",
+            "CUDA",
+            "Python",
+            "OpenMP",
+            "Multithreading",
+            "CMake"
+          ],
+
+          "bg": "linear-gradient(135deg, #020407 0%, #071017 48%, #06151b 100%)"
         },
+
         {
-          "title": "NextGen Dashboard",
-          "problem": "Stakeholders couldn’t track key metrics in real time because existing dashboards were slow, visually cluttered, and difficult to navigate. Large datasets triggered expensive re-renders, making exploration laggy and reducing confidence during decision-critical reviews.",
-          "solution": "Implemented a high-performance analytics dashboard with incremental rendering, memoized data transforms, and stream-based updates for critical KPIs. Redesigned the information hierarchy, interaction states, and component density so teams could scan trends faster and make decisions with fewer context switches.",
-          "image": "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=1200&q=80",
-          "tech": ["Next.js", "TypeScript", "GSAP", "Tailwind"],
-          "bg": "linear-gradient(135deg, #040609 0%,#090d15 50%,#0e1420 100%)"
+          "title": "Job Automation Agent",
+
+          "problem": "Applying to jobs across multiple platforms is repetitive and time-consuming. Candidates have to repeatedly search different job boards, evaluate opportunities, fill similar application forms, and provide the same information across different application portals.",
+
+          "solution": "Built an AI-powered job automation agent that discovers relevant opportunities across LinkedIn, Glassdoor, and Indeed, navigates application portals, fills forms, and submits applications automatically. Integrated Playwright and BeautifulSoup for browser automation and scraping, with vector retrieval, SQLite, Ollama, and a knowledge graph for context-aware candidate information and intelligent form filling.",
+
+          "image": "/assets/projects/job-automation.png",
+
+          "tech": [
+            "Django",
+            "Playwright",
+            "BeautifulSoup",
+            "Vector DB",
+            "SQLite",
+            "Ollama",
+            "Knowledge Graph"
+          ],
+
+          "bg": "linear-gradient(135deg, #050207 0%, #100713 48%, #160a19 100%)"
+        },
+
+        {
+          "title": "Brom – Personal Management App",
+
+          "problem": "Personal productivity information is often scattered across separate applications for tasks, expenses, financial records, notes, and voice memos. Switching between different tools makes it harder to keep everyday information organized and accessible.",
+
+          "solution": "Building Brom as a unified personal management application for tasks, expenses, financial statements, audio notes, and regular notes. The app uses a local-first architecture with SQLite for persistent offline storage, Zustand for application state, and a backend synchronization layer so data can remain available locally while supporting synchronization with remote services.",
+
+          "image": "/assets/projects/brom.png",
+
+          "tech": [
+            "React Native",
+            "Expo",
+            "TypeScript",
+            "SQLite",
+            "Zustand",
+            "Django",
+            "Axios"
+          ],
+
+          "bg": "linear-gradient(135deg, #020609 0%, #061217 48%, #081b20 100%)"
         }
       ]
     </script>
     <!-- Modular JS -->
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"
-      integrity="sha512-NcZdtrT77bJr4STcmsGAESr06BYGE8woZdSdEgqnpyqac7sugNO+Tr4bGwGF3MsnEkGKhU2KL2xh6Ec+BqsaHA=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    ></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js"></script>
     <script src="js/core.js"></script>
     <script src="js/nav.js"></script>
     <script src="js/about.js"></script>
     <script src="js/keyboard.js"></script>
     <script src="js/projects.js"></script>
+    <script src="js/contact.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+
+    <script src="./js/projects.js"></script>
   </body>
 </html>
